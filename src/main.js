@@ -55,10 +55,11 @@ const isAvailable = (() => {
  * @param key 保存的键值
  * @param val 保存的内容
  */
-export const setItem = (key, val, opts = {}) => {
+export const setItem = (key, val, type, opts = {}) => {
 	val = JSON.stringify(val);
 	if (isAvailable) {
-		localStorage.setItem(key, val);
+		let fn = type === 'session' ? sessionStorage : localStorage;
+		fn.setItem(key, val);
 	}
 };
 /**
@@ -66,18 +67,20 @@ export const setItem = (key, val, opts = {}) => {
  * @param  {[String]} key 获取的键值
  * @return {Object}
  */
-export const getItem = (key, opts = {}) => {
+export const getItem = (key, type, opts = {}) => {
 	if (isAvailable) {
-		return localStorage.getItem(key) && JSON.parse(localStorage.getItem(key));
+		let fn = type === 'session' ? sessionStorage : localStorage;
+		return fn.getItem(key) && JSON.parse(fn.getItem(key));
 	}
 };
 /**
  * 删除缓存
  * @param  {[String]} key 删除的键值
  */
-export const delItem = (key, opts = {}) => {
+export const delItem = (key, type, opts = {}) => {
 	if (isAvailable) {
-		localStorage.removeItem(key);
+		let fn = type === 'session' ? sessionStorage : localStorage;
+		fn.removeItem(key);
 	}
 };
 export const getDevice = (opts = {}) => {
