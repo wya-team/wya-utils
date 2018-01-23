@@ -224,7 +224,7 @@ export let objRegex = {
 		error: "请输入正确数字"
 	},
 	validInteger: {
-		regex: /^[1-9]*$/,
+		regex: /^[1-9]\d*$/,
 		error: "请输入正整数"
 	},
 	validEmail: {
