@@ -357,3 +357,126 @@ export const defineProperty = (obj, key, value, opts = {}) => {
 
 	return Object.defineProperty(obj, key, descriptor);
 };
+
+/**
+ * 输入金额
+ */
+export const getFormatInputMoney = (string, opts = {}) => {
+	if (!string) {
+		string = '0.00';
+	}
+	let value = string;
+	value = value.replace(/[^\d.]/g, "");  // 清除“数字”和“.”以外的字符
+	value = value.replace(/\.{2,}/g, "."); // 只保留第一个. 清除多余的
+	value = value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+	value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');// 只能输入两个小数
+	if (value.indexOf(".") < 0 && value != ""){ // 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+		value = parseFloat(value);
+	}
+	return value;
+};
+/**
+ * 浮点数计算 加法
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ */
+export const accAdd = (arg1, arg2, opts = {}) => {
+	let r1, r2, m, c;
+	try {
+		r1 = arg1.toString().split(".")[1].length;
+	}
+	catch (e) {
+		r1 = 0;
+	}
+	try {
+		r2 = arg2.toString().split(".")[1].length;
+	}
+	catch (e) {
+		r2 = 0;
+	}
+	c = Math.abs(r1 - r2);
+	m = Math.pow(10, Math.max(r1, r2));
+	if (c > 0) {
+		let cm = Math.pow(10, c);
+		if (r1 > r2) {
+			arg1 = Number(arg1.toString().replace(".", ""));
+			arg2 = Number(arg2.toString().replace(".", "")) * cm;
+		} else {
+			arg1 = Number(arg1.toString().replace(".", "")) * cm;
+			arg2 = Number(arg2.toString().replace(".", ""));
+		}
+	} else {
+		arg1 = Number(arg1.toString().replace(".", ""));
+		arg2 = Number(arg2.toString().replace(".", ""));
+	}
+	return (arg1 + arg2) / m;
+};
+
+/**
+ * 浮点数计算 减法
+ * @param arg1
+ * @param arg2
+ * @returns {string}
+ */
+export const accSub = (arg1, arg2, opts = {}) => {
+	let r1, r2, m, n;
+	try {
+		r1 = arg1.toString().split(".")[1].length;
+	}
+	catch (e) {
+		r1 = 0;
+	}
+	try {
+		r2 = arg2.toString().split(".")[1].length;
+	}
+	catch (e) {
+		r2 = 0;
+	}
+	m = Math.pow(10, Math.max(r1, r2));
+	n = (r1 >= r2) ? r1 : r2;
+	return ((arg1 * m - arg2 * m) / m).toFixed(n);
+};
+/**
+ * 浮点数计算 乘法
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ */
+export const accMul = (arg1, arg2, opts = {}) => {
+	let m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+	try {
+		m += s1.split(".")[1].length;
+	}
+	catch (e) {
+	}
+	try {
+		m += s2.split(".")[1].length;
+	}
+	catch (e) {
+	}
+	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+};
+/**
+ * 浮点数计算 除法
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ */
+export const accDiv = (arg1, arg2, opts = {}) => {
+	let t1 = 0, t2 = 0, r1, r2;
+	try {
+		t1 = arg1.toString().split(".")[1].length;
+	}
+	catch (e) {
+	}
+	try {
+		t2 = arg2.toString().split(".")[1].length;
+	}
+	catch (e) {
+	}
+
+	r1 = Number(arg1.toString().replace(".", ""));
+	r2 = Number(arg2.toString().replace(".", ""));
+	return (r1 / r2) * Math.pow(10, t2 - t1);
+};

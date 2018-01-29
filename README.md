@@ -48,6 +48,11 @@ opts | 自定义参数 | `obj` | {}
 - `dataValidity(rule, value, callback, opts)`
 - `getCroppedImg(canvas, fileName, getFile, opts)`
 - `defineProperty(obj, key, value, opts)`
+- `getFormatInputMoney(string, opts = {})`
+- `accAdd(arg1, arg2, opts = {})`
+- `accSub(arg1, arg2, opts = {})`
+- `accMul(arg1, arg2, opts = {})`
+- `accDiv(arg1, arg2, opts = {})`
 ...
 
 <!--  以下内容无视  -->
