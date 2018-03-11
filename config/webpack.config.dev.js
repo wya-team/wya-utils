@@ -11,6 +11,19 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { APP_ROOT, commonConfig, localIp, localPort } = require('./webpack.config.common');
 
 let webpackConfig = {
+	entry: {
+		main: path.resolve(APP_ROOT, `examples/main.js`)
+	},
+	output: {
+		path: path.resolve(APP_ROOT, 'dist'),
+		filename: '[name].[hash:8].bundle.js',
+		libraryTarget: 'umd',
+		/**
+		 * html引用路径
+		 * publicPath: ENV_IS_DEV ? './' : 'https://cdn.example.com/'
+		 */
+		publicPath: '/'
+	},
 	plugins: [
 		/**
 		 * 输出html
@@ -45,9 +58,9 @@ let webpackConfig = {
 		/**
 		 * StyleLint
 		 */
-		new StyleLintPlugin({
-			configFile: path.resolve(APP_ROOT, '.stylelintrc')
-		})
+		// new StyleLintPlugin({
+		// 	configFile: path.resolve(APP_ROOT, '.stylelintrc')
+		// })
 	]
 };
 

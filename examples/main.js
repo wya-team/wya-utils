@@ -1,2 +1,2 @@
-import * as utils from '../src/index';
+import * as utils from '../src/main';
 console.log(utils);

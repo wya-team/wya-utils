@@ -1,6 +1,8 @@
 # wya-utils
 [![npm][npm-image]][npm-url] [![changelog][changelog-image]][changelog-url]
 
+## [Demo](https://wya-team.github.io/wya-utils/demo/index.html)
+
 ## 安装
 
 ```vim
