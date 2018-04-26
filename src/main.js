@@ -159,15 +159,13 @@ export const getConstructUrl = (route, opts = {}) => { // 创建新的url
 };
 /**
  * 解析url
- * @param  {String} windowHash = location.pathname
+ * @param  {String} url
  * @return {Object}
  */
-export const getParseUrl = (windowHash = location.pathname, opts = {}) => { // 解析url
+export const getParseUrl = (url = `${location.pathname}${location.search}`, opts = {}) => { // 解析url
 	let path = [];
 	const query = {};
-	// windowHash = location.hash;
-	// const hashArr = windowHash.replace('#/', '').split('?');
-	const hashArr = windowHash.replace('/', '').split('?');
+	const hashArr = url.replace('/', '').split('?');
 	path = hashArr[0].split('/');
 
 	if (hashArr.length > 1) {
