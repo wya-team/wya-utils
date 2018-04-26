@@ -165,11 +165,12 @@ export const getConstructUrl = (route, opts = {}) => { // 创建新的url
 export const getParseUrl = (url = `${location.pathname}${location.search}`, opts = {}) => { // 解析url
 	let path = [];
 	const query = {};
-	const hashArr = url.replace('/', '').split('?');
-	path = hashArr[0].split('/');
+	// const urlArr = url.replace('/', '').split('?');
+	const urlArr = url.split('?');
+	path = urlArr[0].split('/');
 
-	if (hashArr.length > 1) {
-		hashArr[1].split('&').forEach(str => {
+	if (urlArr.length > 1) {
+		urlArr[1].split('&').forEach(str => {
 			const arr = str.split('=');
 			const key = arr[0];
 			const value = arr[1];
