@@ -11,6 +11,7 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { APP_ROOT, commonConfig, localIp, localPort } = require('./webpack.config.common');
 
 let webpackConfig = {
+	mode: 'development',
 	entry: {
 		main: path.resolve(APP_ROOT, `examples/main.js`)
 	},
@@ -36,9 +37,9 @@ let webpackConfig = {
 		}),
 		/**
 		 * 开发环境
+		 * webpack 4 默认支持: 'process.env.NODE_ENV': JSON.stringify('production')
 		 */
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('development'),
 			__DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 		}),
 		/**

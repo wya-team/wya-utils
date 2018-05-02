@@ -65,7 +65,7 @@ const webpackConfig = {
 						}
 					}
 				]
-			}, 
+			},
 			{
 				test: /\.(css|scss)$/,
 				use: ['style-loader', 'css-loader', postcssLoader, 'sass-loader'],
@@ -76,10 +76,21 @@ const webpackConfig = {
 			},
 			{
 				test: /\.less$/,
-				use: ['style-loader', 'css-loader', postcssLoader, 'less-loader'],
+				use: [
+					'style-loader',
+					'css-loader',
+					postcssLoader,
+					{
+						loader: "less-loader",
+						options: {
+							javascriptEnabled: true
+						}
+					}
+				],
+
 			},
 			{
-				test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
+				test: /\.(png|jpg|gif|eot|ttf|woff|woff2|svg)$/,
 				loader: 'url-loader',
 				options: {
 					limit: 10000
@@ -92,29 +103,27 @@ const webpackConfig = {
 			{
 				test: /\.html$/i,
 				use: 'html-loader'
-			},
-			{
-				test: /\.svg$/,
-				use: 'svg-sprite-loader',
-				include: [
-					// antd-mobile 内置svg，后续可以等它支持2.x做修改
-					path.resolve(APP_ROOT, ''),  // 业务代码本地私有 svg 存放目录
-				],
 			}
 		]
 	},
+	optimization: {
+		// 默认关闭压缩
+		minimize: ENV_IS_DEV ? false : JSON.parse(process.env.UGLIFY_JS),
+		// 原：NamedModulesPlugin()
+		namedModules: true,
+		// 原：NoEmitOnErrorsPlugin() - 异常继续执行
+		noEmitOnErrors: true,
+		// 原：ModuleConcatenationPlugin() - 模块串联 - dev模式下回影响antd（比如：Pagination, 和语言有关）
+		concatenateModules: !ENV_IS_DEV,
+	},
 	plugins: [
-		/**
-		 * 报错继续运行2.0弃用NoErrorsPlugin，改用NoEmitOnErrorsPlugin
-		 */
-		new webpack.NoEmitOnErrorsPlugin(),
 	]
 };
 
 const defaultConfig = {
 	// cheap-module-eval-source-map 原始源码（仅限行）
 	// cheap-eval-source-map 转换过的代码（仅限行）// 重构建比较好
-	devtool: ENV_IS_DEV ? 'cheap-module-eval-source-map' : undefined, 
+	devtool: ENV_IS_DEV ? 'cheap-module-eval-source-map' : undefined,
 	resolve: {
 		extensions: ['.js']
 	},
@@ -137,9 +146,6 @@ const defaultConfig = {
 		// 		pathRewrite: {"^/api" : ""}
 		// 	}
 		// },
-		// hot: true,// HMR 注意需要配合 HotModuleReplacementPlugin 与 module.hot 同--hot
-		// hotOnly: true, // 报错原因
-		// lazy: true
 	},
 	node: {
 		global: true,

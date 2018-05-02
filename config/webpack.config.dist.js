@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { APP_ROOT, commonConfig, localIp, localPort, libName } = require('./webpack.config.common');
 
 let distConfig = {
+	mode: "production",
 	entry: {
 		main: path.resolve(APP_ROOT, `src/main.js`)
 	},
@@ -25,15 +26,11 @@ let distConfig = {
 	plugins: [
 		/**
 		 * 生产环境
+		 * webpack 4 默认支持: 'process.env.NODE_ENV': JSON.stringify('production')
 		 */
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('production'),
 			__DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
 		}),
-		/**
-		 * webpack3.x 模块串联
-		 */
-		new webpack.optimize.ModuleConcatenationPlugin()
 	],
 };
 
@@ -63,19 +60,15 @@ let demoConfig = {
 		}),
 		/**
 		 * 生产环境
+		 * webpack 4 默认支持: 'process.env.NODE_ENV': JSON.stringify('production')
 		 */
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('production'),
 			__DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-		}),
-		/**
-		 * webpack3.x 模块串联
-		 */
-		new webpack.optimize.ModuleConcatenationPlugin()
+		})
 	],
 };
 
-module.exports = [ 
+module.exports = [
 	webpackMerge( commonConfig, distConfig ),
 	webpackMerge( commonConfig, demoConfig ),
 ];
