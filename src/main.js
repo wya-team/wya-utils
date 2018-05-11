@@ -480,4 +480,6 @@ export const accDiv = (arg1, arg2, opts = {}) => {
 /**
  *
  */
-export const createMixins = (...list) => target => Object.assign(target.prototype, ...list);
+export const createMixins = (...list) => target => {
+	Object.assign(target.prototype, ...list);
+};

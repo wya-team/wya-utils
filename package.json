@@ -1,6 +1,6 @@
 {
   "name": "wya-utils",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "wya-utils for js",
   "main": "lib/main.js",
   "files": [
@@ -9,6 +9,7 @@
     "dist/**",
     "examples/**"
   ],
+
   "scripts": {
     "start": "npm run dev",
     "dev": "npm run prompt && npm run all",
