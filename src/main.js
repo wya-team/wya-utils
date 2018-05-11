@@ -224,7 +224,7 @@ export let objRegex = {
 	},
 	validInteger: {
 		regex: /^[1-9]\d*$/,
-		error: "请输入正整数"
+		error: "请输入非负整数"
 	},
 	validEmail: {
 		regex: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
@@ -244,7 +244,8 @@ export let objRegex = {
 		error: "身份证格式不正确"
 	},
 	validPrice: {
-		regex: /^([+-]?[1-9][\d]{0,3}|0)([.]?[\d]{1,2})?$/,
+		// regex: /^([+-]?[1-9][\d]{0,3}|0)([.]?[\d]{1,2})?$/,
+		regex: /^([1-9][\d]{0,10}|0)([.]?[\d]{1,2})?$/,
 		error: "请输入正确金额"
 	},
 	validMobile: {
@@ -254,7 +255,7 @@ export let objRegex = {
 	},
 	validPhone: {
 		regex: /^(\(\d{3,4}\)|\d{3,4}(-|\s)?)?\d{7,8}(-\d{1,4})?$/,
-		error: "请填写正确的手机号码"
+		error: "请填写正确的电话号码"
 	},
 	validPostalCode: {
 		regex: /^\d{4}$/,
@@ -279,7 +280,7 @@ export const changeObjRegex = (rule = {}, opts = {}) => {
 	objRegex = {
 		...objRegex,
 		...rule
-	}; 
+	};
 };
 /**
  * 验证数据
@@ -338,9 +339,9 @@ export const getCroppedImg = (canvas, fileName = '____fileName', getFile = false
  */
 export const defineProperty = (obj, key, value, opts = {}) => {
 	const {
-		writable = true, 
-		enumerable = true, 
-		configurable = true, 
+		writable = true,
+		enumerable = true,
+		configurable = true,
 		...rest
 	} = opts;
 	const descriptor = {
@@ -476,3 +477,7 @@ export const accDiv = (arg1, arg2, opts = {}) => {
 	r2 = Number(arg2.toString().replace(".", ""));
 	return (r1 / r2) * Math.pow(10, t2 - t1);
 };
+/**
+ *
+ */
+export const createMixins = (...list) => target => Object.assign(target.prototype, ...list);
