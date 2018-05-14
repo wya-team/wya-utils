@@ -196,7 +196,7 @@ export const getParseUrl = (url = `${location.pathname}${location.search}`, opts
 export const getHashUrl = (url = '', paramObj, opts = {}) => {
 	let paramArray = [];
 	for (let key in paramObj) {
-		if (paramObj[key] && paramObj[key].length != 0) { // 过滤掉值为null,undefined,''情况
+		if (paramObj[key] || paramObj[key] === false || paramObj[key] === 0) { // 过滤掉值为null,undefined,''情况
 			paramArray = [...paramArray, `${key}=${paramObj[key]}`];
 		}
 	}
