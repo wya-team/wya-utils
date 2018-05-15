@@ -300,6 +300,7 @@ export const dataValidity = (rule, value, callback, opts = {}) => {
 		return false;
 	}
 	if (rule.type == 'validMobile') {
+		value = value || '';
 		value = value.replace(/\s/g, '');
 	}
 	if (objRegex[rule.type] && value && !objRegex[rule.type].regex.test(value)) {
