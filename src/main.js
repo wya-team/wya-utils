@@ -479,31 +479,59 @@ export const accDiv = (arg1, arg2, opts = {}) => {
 	return (r1 / r2) * Math.pow(10, t2 - t1);
 };
 /**
- *
+ * 原型合并或者多(合并)继承
  */
-export const createMixins = (...list) => target => {
-	Object.assign(target.prototype, ...list);
+const copyProperties = (target, source) => {
+	for (let key of Reflect.ownKeys(source)) {
+		if ( key !== "constructor"
+			&& key !== "prototype"
+			&& key !== "name"
+		) {
+			let desc = Object.getOwnPropertyDescriptor(source, key);
+			Object.defineProperty(target, key, desc);
+		}
+	}
 };
+// 用于class
+// class xxx extends mixins(a, b, c) {}
+export const mixins = (...mixins) => {
+	class Mix {}
+
+	for (let mixin of mixins) {
+		copyProperties(Mix, mixin); // 拷贝实例属性
+		copyProperties(Mix.prototype, mixin.prototype); // 拷贝原型属性
+	}
+
+	return Mix;
+};
+// 用于对象 
+// @createMixins({})
+// class {}
+export const createMixins = (...mixins) => target => {
+	Object.assign(target.prototype, ...mixins);
+};
+
+
 
 /**
  * 用word方式计算正文字数
  * @param str 
  */
 export const getCpmisWords = (str) => {
-    let sLen = 0;
-    try{
-        //先将回车换行符做特殊处理
-        str = str.replace(/(\r\n+|\s+|　+)/g,"龘");
-        //处理英文字符数字，连续字母、数字、英文符号视为一个单词
-        str = str.replace(/[\x00-\xff]/g,"m");
-        //合并字符m，连续字母、数字、英文符号视为一个单词
-        str = str.replace(/m+/g,"*");
-        //去掉回车换行符
-        str = str.replace(/龘+/g,"");
-        //返回字数
-        sLen = str.length;
-    }catch(e){
+	let sLen = 0;
+	try {
+		// 先将回车换行符做特殊处理
+		str = str.replace(/(\r\n+|\s+|　+)/g, "龘");
+		// 处理英文字符数字，连续字母、数字、英文符号视为一个单词
+		str = str.replace(/[\x00-\xff]/g, "m");
+		// 合并字符m，连续字母、数字、英文符号视为一个单词
+		str = str.replace(/m+/g, "*");
+		// 去掉回车换行符
+		str = str.replace(/龘+/g, "");
+		// 返回字数
+		sLen = str.length;
+	} catch (e){
 
-    }
-    return sLen;
-}
+	}
+	return sLen;
+};
