@@ -51,6 +51,7 @@ opts | 自定义参数 | `obj` | {}
 - `getCroppedImg(canvas, fileName, getFile, opts)`
 - `defineProperty(obj, key, value, opts)`
 - `getFormatInputMoney(string, opts = {})`
+- `acc`
 - `accAdd(arg1, arg2, opts = {})`
 - `accSub(arg1, arg2, opts = {})`
 - `accMul(arg1, arg2, opts = {})`
