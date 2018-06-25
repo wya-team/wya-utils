@@ -299,16 +299,25 @@ export const dataValidity = (rule, value, callback, opts = {}) => {
 		callback(error);
 		return false;
 	}
-	if (rule.type == 'validMobile') {
-		value = value || '';
-		value = value.replace(/\s/g, '');
+	let rules = rule.type instanceof Array ? rule.type : [rule.type];
+
+	for (let i = 0; i < rules.length; i++) {
+		let type = rules[i];
+		let val = value;
+		if (type == 'validMobile') {
+			val = val || '';
+			val = val.replace(/\s/g, '');
+		}
+
+		if (objRegex[type] && val && !objRegex[type].regex.test(val)) {
+			error = objRegex[type].error;
+			rules.length - 1 == i && callback(error);
+		} else {
+			callback();
+			break;
+		}
 	}
-	if (objRegex[rule.type] && value && !objRegex[rule.type].regex.test(value)) {
-		error = objRegex[rule.type].error;
-		callback(error);
-	} else {
-		callback();
-	}
+	
 };
 
 /**
