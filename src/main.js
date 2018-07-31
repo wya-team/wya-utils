@@ -254,7 +254,7 @@ export let objRegex = {
 		error: "请填写正确的手机号码"
 	},
 	validPhone: {
-		regex: /^(\(\d{3,4}\)|\d{3,4}(-|\s)?)?\d{7,8}(-\d{1,4})?$/,
+		regex: /^0[1-9][0-9]{1,2}-[2-8][0-9]{6,7}$/,
 		error: "请填写正确的电话号码"
 	},
 	validPostalCode: {
