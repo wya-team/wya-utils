@@ -174,7 +174,8 @@ export const getParseUrl = (url = `${location.pathname}${location.search}`, opts
 			const arr = str.split('=');
 			const key = arr[0];
 			const value = arr[1];
-			if (isNaN(value)) {
+			// 009, ''
+			if (isNaN(value) || value[0] === '0' || value === '') {
 				query[key] = value;
 			} else {
 				query[key] = Number(value);
