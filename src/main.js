@@ -162,7 +162,7 @@ export const getConstructUrl = (route, opts = {}) => { // 创建新的url
  * @param  {String} url
  * @return {Object}
  */
-export const getParseUrl = (url = `${location.pathname}${location.search}`, opts = {}) => { // 解析url
+export const getParseUrl = (url = `${location.pathname}${decodeURIComponent(location.search)}`, opts = {}) => { // 解析url
 	let path = [];
 	const query = {};
 	// const urlArr = url.replace('/', '').split('?');
