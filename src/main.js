@@ -175,7 +175,12 @@ export const getParseUrl = (url = `${location.pathname}${decodeURIComponent(loca
 			const key = arr[0];
 			const value = arr[1];
 			// 009, ''
-			if (isNaN(value) || value[0] === '0' || value === '') {
+			if (
+				isNaN(value) 
+				|| value[0] === '0' 
+				|| value === '' 
+				|| value > Number.MAX_SAFE_INTEGE
+			) {
 				query[key] = value;
 			} else {
 				query[key] = Number(value);
