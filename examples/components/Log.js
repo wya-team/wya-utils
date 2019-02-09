@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as utils from '../../src/main';
 import { itemObj } from '../config';
+console.log(utils);
 class Log extends Component {
 	constructor(props, context) {
 		super(props, context);
