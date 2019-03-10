@@ -42,7 +42,7 @@
 	- email
 	- date
 	- time
-	- idCard
+	- IDCard
 	- price
 	- mobile
 	- phone

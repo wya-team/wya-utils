@@ -48,7 +48,7 @@ npm install @wya/utils --save
 	- email
 	- date
 	- time
-	- idCard
+	- IDCard
 	- price
 	- mobile
 	- phone

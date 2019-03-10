@@ -19,7 +19,7 @@ export const REGEX_RULES = {
 		value: /\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/,
 		msg: "时间格式不正确"
 	},
-	idCard: {
+	IDCard: {
 		// value: /(^\d{15}$)|(^\d{17}([0-9]|X|x)$)/,
 		value: /(^[0-9a-zA-Z]{6,}$)/, // 港澳台比较特殊
 		msg: "身份证格式不正确"
