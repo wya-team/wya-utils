@@ -23,12 +23,9 @@ module.exports = {
 	],
 	// modulePathIgnorePatterns 与 testPathIgnorePatterns相似
 	modulePathIgnorePatterns: [
-		// '/src/mock'
 	],
 	testPathIgnorePatterns: [
-		'/src/mock',
-		'/node_modules/',
-		'dekko'
+		'/node_modules/'
 	],
 	testRegex: '.*\\.test\\.js$',
 	/**

@@ -47,4 +47,4 @@ export const getDevice = (opts = {}) => {
 	device.touch = (device.android || device.ios) ? true : false;
 	return device;
 };
-export const device = getDevice();
+export const Device = getDevice();

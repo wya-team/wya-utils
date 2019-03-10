@@ -1,7 +1,7 @@
 /**
  * 输入金额
  */
-export const getFormatInputMoney = (string, opts = {}) => {
+export const formatMoney = (string, opts = {}) => {
 	if (!string) {
 		string = '0.00';
 	}

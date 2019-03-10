@@ -4,7 +4,7 @@
  * @param arg2
  * @returns {number}
  */
-export const accAdd = (arg1, arg2, opts = {}) => {
+const add = (arg1, arg2, opts = {}) => {
 	let r1, r2, m, c;
 	try {
 		r1 = arg1.toString().split(".")[1].length;
@@ -40,7 +40,7 @@ export const accAdd = (arg1, arg2, opts = {}) => {
  * @param arg2
  * @returns {string}
  */
-export const accSub = (arg1, arg2, opts = {}) => {
+const sub = (arg1, arg2, opts = {}) => {
 	let r1, r2, m, n;
 	try {
 		r1 = arg1.toString().split(".")[1].length;
@@ -62,7 +62,7 @@ export const accSub = (arg1, arg2, opts = {}) => {
  * @param arg2
  * @returns {number}
  */
-export const accMul = (arg1, arg2, opts = {}) => {
+const mul = (arg1, arg2, opts = {}) => {
 	let m = 0, s1 = arg1.toString(), s2 = arg2.toString();
 	try {
 		m += s1.split(".")[1].length;
@@ -80,7 +80,7 @@ export const accMul = (arg1, arg2, opts = {}) => {
  * @param arg2
  * @returns {number}
  */
-export const accDiv = (arg1, arg2, opts = {}) => {
+const div = (arg1, arg2, opts = {}) => {
 	let t1 = 0, t2 = 0, r1, r2;
 	try {
 		t1 = arg1.toString().split(".")[1].length;
@@ -95,46 +95,47 @@ export const accDiv = (arg1, arg2, opts = {}) => {
 	r2 = Number(arg2.toString().replace(".", ""));
 	return (r1 / r2) * Math.pow(10, t2 - t1);
 };
+
 /**
  * 针对以上加减乘除
  * 支持链式调用
- * Acc(a).add(1).add(2)
+ * (new Manager(1)).add(1).add(2).val()
  * class -> babel 
  */
-
-export const acc = value => {
-	class Acc {
-		constructor(val) {
-			this.result = val;
-		}
-		add(val) {
-			this.result = accAdd(this.result, val);
-			return this;
-		}
-		sub(val, isExchange) {
-			this.result = isExchange 
-				? accSub(this.result, val)
-				: accSub(val, this.result);
-			return this;
-		}
-		mul(val) {
-			this.result = accMul(this.result, val);
-			return this;
-		}
-		div(val, isExchange) {
-			this.result = isExchange 
-				? accDiv(this.result, val)
-				: accDiv(val, this.result);
-			return this;
-		}
-		val() {
-			let _value = this.result;
-			if (typeof _value === 'object') {
-				throw new TypeError('参数错误');
-				return 0;
-			}
-			return _value || 0;
-		}
+class Manager {
+	constructor(val, opts = {}) {
+		this.result = val;
 	}
-	return new Acc(value);
-};
+	add(val) {
+		this.result = add(this.result, val);
+		return this;
+	}
+	sub(val, isExchange) {
+		this.result = isExchange 
+			? sub(this.result, val)
+			: sub(val, this.result);
+		return this;
+	}
+	mul(val) {
+		this.result = mul(this.result, val);
+		return this;
+	}
+	div(val, isExchange) {
+		this.result = isExchange 
+			? div(this.result, val)
+			: div(val, this.result);
+		return this;
+	}
+	extend(fn, ...rest) {
+		if (typeof fn === 'function') {
+			this.result = fn(this.result, ...rest);
+		}
+		return this;
+	}
+	val() {
+		return this.result || 0;
+	}
+}
+
+// Calc(1).add(1).val();
+export const Calc = v => new Manager(v);
