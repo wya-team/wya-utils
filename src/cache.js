@@ -105,27 +105,3 @@ class CookieManager {
 
 export const Stroage = new CacheStore( new StroageManager() );
 export const Cookie = new CacheStore( new StroageManager() );
-
-// 以上为工厂模式
-// 
-// 以下抽象工厂模式设计
-// class AbstractCacheFactory {
-// 	setVersion() {
-// 	}
-// 	get() {
-// 	}
-// 	set() {
-// 	}
-// 	remove() {
-// 	}
-// }
-// 
-// class CacheStore // 同上
-// 
-// 接口协议
-// class CookieManager extends AbstractCacheFactory {
-// 同上
-// }
-// class CookieManager extends AbstractCacheFactory {
-// 同上
-// }
