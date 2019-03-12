@@ -104,4 +104,4 @@ class CookieManager {
 }
 
 export const Stroage = new CacheStore( new StroageManager() );
-export const Cookie = new CacheStore( new StroageManager() );
+export const Cookie = new CacheStore( new CookieManager() );
