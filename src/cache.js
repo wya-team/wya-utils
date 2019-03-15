@@ -19,7 +19,7 @@ class CacheStore {
 	}
 }
 
-class StroageManager {
+class StorageManager {
 	constructor() {
 		this.isAvailable = (() => {
 			const test = 'test';
@@ -32,7 +32,7 @@ class StroageManager {
 			}
 		})();
 	}
-	setVersion(...rest) {
+	setVersion(version, clear, opts = {}) {
 		this.version = version;
 		// todo 清理之前内容
 	}
@@ -103,5 +103,5 @@ class CookieManager {
 	}
 }
 
-export const Stroage = new CacheStore( new StroageManager() );
+export const Storage = new CacheStore( new StorageManager() );
 export const Cookie = new CacheStore( new CookieManager() );

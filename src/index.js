@@ -1,4 +1,4 @@
-export { Stroage, Cookie } from './cache';
+export { Storage, Cookie } from './cache';
 export { URL } from './url';
 export { RegEx } from './regex';
 export { Device } from './device';
