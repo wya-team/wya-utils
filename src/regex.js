@@ -47,7 +47,7 @@ class Manager {
 			}
 
 			if (this[type] && val && !this[type].test(val)) {
-				errorMsg = rule.msg || this[`${type}Msg`];
+				errorMsg = rule.message || rule.msg || this[`${type}Msg`];
 				rules.length - 1 == i && callback(errorMsg);
 			} else {
 				callback();
