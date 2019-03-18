@@ -30,6 +30,7 @@ class Manager {
 	 * @return {Object}
 	 */	
 	static parse = (url, opts = {}) => {
+		// TODO: 使用 new window.URL(url);
 		url = url || `${location.pathname}${decodeURIComponent(location.search)}`;
 		let path = [];
 		const query = {};
