@@ -21,7 +21,8 @@ npm install @wya/utils --save
 	- createMixins,
 	- formatMoney,
 	- canvas2file,
-	- getWordsLength
+	- getWordsLength,
+	- sum2array
 
 - Storage, Cookie
 	- get

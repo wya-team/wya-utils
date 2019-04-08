@@ -7,7 +7,7 @@ import {
 	cloneDeepEasier
 } from './assit';
 import { createMixins } from './mixin';
-import { formatMoney } from './format';
+import { formatMoney, sum2array } from './format';
 import { canvas2file, getWordsLength } from './other';
 
 export const Utils = {

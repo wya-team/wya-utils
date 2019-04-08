@@ -15,3 +15,18 @@ export const formatMoney = (string, opts = {}) => {
 	}
 	return value;
 };
+
+/**
+ * 二进制求和值转数组
+ */
+export const sum2array = (value) => {
+	let target = [];
+	while (value) {
+		target.push(value % 2);
+		value = parseInt(value / 2);
+	}
+	return target.reduce((pre, cur, index) => {
+		cur && pre.push(Math.pow(2, index));
+		return pre;
+	}, []);
+};
