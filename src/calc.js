@@ -112,8 +112,8 @@ class Manager {
 	}
 	sub(val, isExchange) {
 		this.result = isExchange 
-			? sub(this.result, val)
-			: sub(val, this.result);
+			? sub(val, this.result)
+			: sub(this.result, val);
 		return this;
 	}
 	mul(val) {
@@ -122,8 +122,8 @@ class Manager {
 	}
 	div(val, isExchange) {
 		this.result = isExchange 
-			? div(this.result, val)
-			: div(val, this.result);
+			? div(val, this.result)
+			: div(this.result, val);
 		return this;
 	}
 	extend(fn, ...rest) {
@@ -133,7 +133,7 @@ class Manager {
 		return this;
 	}
 	val() {
-		return this.result || 0;
+		return Number(this.result || 0);
 	}
 }
 

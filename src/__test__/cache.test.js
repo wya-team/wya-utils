@@ -1,21 +1,22 @@
-import { Stroage, Cookie } from '..';
+import { Storage, Cookie } from '../cache';
 
 describe('cache.js', () => {
 	test('验证api', () => {
-		expect(typeof Stroage.get).toBe('function');
-		expect(typeof Stroage.set).toBe('function');
-		expect(typeof Stroage.remove).toBe('function');
+		expect(Storage === window.Storage).toBe(false);
+		expect(typeof Storage.get).toBe('function');
+		expect(typeof Storage.set).toBe('function');
+		expect(typeof Storage.remove).toBe('function');
 
 		expect(typeof Cookie.get).toBe('function');
 		expect(typeof Cookie.set).toBe('function');
 		expect(typeof Cookie.remove).toBe('function');
 
 
-		Stroage.set('user', { name: 'wya' });
-		expect(Stroage.get('user').name).toBe('wya');
+		Storage.set('user', { name: 'wya' });
+		expect(Storage.get('user').name).toBe('wya');
 
-		Stroage.remove('user');
-		expect(Stroage.get('user')).toBe(null);
+		Storage.remove('user');
+		expect(Storage.get('user')).toBe(null);
 
 
 		Cookie.set('user', { name: 'wya' });
