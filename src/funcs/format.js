@@ -20,13 +20,10 @@ export const formatMoney = (string, opts = {}) => {
  * 二进制求和值转数组
  */
 export const sum2array = (value) => {
-	let target = [];
-	while (value) {
-		target.push(value % 2);
-		value = parseInt(value / 2);
-	}
-	return target.reduce((pre, cur, index) => {
-		cur && pre.push(Math.pow(2, index));
+	return parseInt(value).toString(2).split('').reduce((pre, cur, index, source) => {
+		Number(cur) && pre.unshift(
+			Math.pow(2, source.length - index - 1)
+		);
 		return pre;
 	}, []);
 };
