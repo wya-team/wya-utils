@@ -27,5 +27,38 @@ describe('regex.js', () => {
 			expect(errorMsg).toBe('test');
 		});
 
+
+		RegEx.validator({ 
+			required: () => {
+				return true;
+			}, 
+		}, '', (errorMsg) => {
+			expect(errorMsg).toBe('必填');
+		});
+
+		RegEx.validator({ 
+			required: (done) => {
+				done('由我来控制报错');
+			}, 
+		}, '', (errorMsg) => {
+			expect(errorMsg).toBe('由我来控制报错');
+		});
+
+		RegEx.validator({ 
+			type: () => {
+				return false;
+			}, 
+		}, '222', (errorMsg) => {
+			expect(errorMsg).toBe(undefined);
+		});
+
+		RegEx.validator({ 
+			type: (done) => {
+				done('由我来控制报错');
+			}, 
+		}, '222', (errorMsg) => {
+			expect(errorMsg).toBe('由我来控制报错');
+		});
+
 	});
 });

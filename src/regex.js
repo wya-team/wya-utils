@@ -34,46 +34,44 @@ class Manager {
 	 * 	, // 依赖其他选项时
 	 * }
 	 */
-	async validator(rule, value, callback, opts = {}) {
-		try {
-			let errorMsg;
-			if (typeof value === 'string') {
-				value = value.trim();
+	validator(rule, value, callback, opts = {}) {
+		let errorMsg;
+		let auto = true;
+
+		if (typeof value === 'string') {
+			value = value.trim();
+		}
+
+		let required = typeof rule.required === 'function'
+			? (auto = !rule.required.length, rule.required(callback))
+			: rule.required;
+
+		if ( required && !value ) {
+			errorMsg = `${rule.name || ''}必填`;
+			auto && callback(errorMsg);
+			return false;
+		}
+		let rules = rule.type instanceof Array ? rule.type : [rule.type];
+
+		for (let i = 0; i < rules.length; i++) {
+			let type = rules[i];
+			let val = value;
+			if (type == 'mobile') {
+				val = val || '';
+				val = val.replace(/\s/g, '');
 			}
-			let required = typeof rule.required === 'function'
-				? await rule.required()
-				: rule.required;
 
-			if ( required && !value ) {
-				errorMsg = `${rule.name || ''}必填`;
-				callback(errorMsg);
-				return false;
+			let isError = typeof type === 'function' 
+				? (auto = !type.length, !type(callback))
+				: this[type] && val && !this[type].test(val);
+
+			if (isError) {
+				errorMsg = rule.message || rule.msg || this[`${type}Msg`];
+				rules.length - 1 == i && auto && callback(errorMsg);
+			} else {
+				auto && callback();
+				break;
 			}
-			let rules = rule.type instanceof Array ? rule.type : [rule.type];
-
-			for (let i = 0; i < rules.length; i++) {
-				let type = rules[i];
-				let val = value;
-				if (type == 'mobile') {
-					val = val || '';
-					val = val.replace(/\s/g, '');
-				}
-
-				let isError = typeof type === 'function' 
-					? await type()
-					: this[type] && val && !this[type].test(val);
-
-				if (type) {
-					errorMsg = rule.message || rule.msg || this[`${type}Msg`];
-					rules.length - 1 == i && callback(errorMsg);
-				} else {
-					callback();
-					break;
-				}
-			}
-		} catch (e) {
-			callback(`验证有误`);
-			console.error(`[@wya/utils - regex]: 验证有误`, e);
 		}
 	}
 	_generate(rules) {
