@@ -21,7 +21,7 @@ export const formatMoney = (string, opts = {}) => {
  */
 export const sum2array = (value) => {
 	return parseInt(value).toString(2).split('').reduce((pre, cur, index, source) => {
-		Number(cur) && pre.unshift(
+		+cur && pre.unshift(
 			Math.pow(2, source.length - index - 1)
 		);
 		return pre;
