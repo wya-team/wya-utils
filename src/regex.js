@@ -40,7 +40,6 @@ class Manager {
 			if (typeof value === 'string') {
 				value = value.trim();
 			}
-			// TODO: 看业务需要是否处理成Promise
 			let required = typeof rule.required === 'function'
 				? await rule.required()
 				: rule.required;
@@ -60,7 +59,6 @@ class Manager {
 					val = val.replace(/\s/g, '');
 				}
 
-				// TODO: 看业务需要是否处理成Promise
 				let isError = typeof type === 'function' 
 					? await type()
 					: this[type] && val && !this[type].test(val);
