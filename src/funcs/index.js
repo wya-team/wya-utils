@@ -19,6 +19,7 @@ export const Utils = {
 	cloneDeepEasier,
 	createMixins,
 	formatMoney,
+	sum2array,
 	canvas2file,
 	getWordsLength
 };
