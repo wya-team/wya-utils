@@ -37,7 +37,7 @@ npm install @wya/utils --save
     - android: false,
     - ios: false,
     - webView: null,
-    - weixin: false,
+    - wechat: false,
     - touch: false,
     - ~~todo: xx版本号~~
 
@@ -53,9 +53,9 @@ npm install @wya/utils --save
 	- price
 	- mobile
 	- phone
-	- postalCode
-	- zipCode
-	- weChat
+	- postalcode
+	- zipcode
+	- wechat
 	- name
 
 - URL

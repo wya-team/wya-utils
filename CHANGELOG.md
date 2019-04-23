@@ -30,7 +30,7 @@
     - android: false,
     - ios: false,
     - webView: null,
-    - weixin: false,
+    - wechat: false, <- weixin
     - touch: false,
     - ~~todo: xx版本号~~
 
@@ -46,9 +46,9 @@
 	- price
 	- mobile
 	- phone
-	- postalCode
-	- zipCode
-	- weChat
+	- postalcode <- postalCode
+	- zipcode <- zipCode
+	- wechat <- weChat
 	- name
 
 - URL
