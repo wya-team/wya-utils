@@ -42,7 +42,7 @@ export const getDevice = (opts = {}) => {
 	// Webview
 	device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
 	// keng..
-	device.weixin = /MicroMessenger/i.test(ua);
+	device.wechat = /MicroMessenger/i.test(ua);
 	// pc or touch
 	device.touch = (device.android || device.ios) ? true : false;
 	return device;
