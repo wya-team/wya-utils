@@ -71,6 +71,11 @@ npm install @wya/utils --save
 	- val
 	- extend
 
+- Load
+	- css
+	- cssCode 
+	- js
+
 <!--  以下内容无视  -->
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
 [changelog-url]: CHANGELOG.md

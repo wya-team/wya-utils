@@ -57,7 +57,12 @@ class StorageManager {
 	get(key, type, opts = {}) {
 		if (this.isAvailable) {
 			let fn = type === 'session' ? sessionStorage : localStorage;
-			return fn.getItem(key) && JSON.parse(fn.getItem(key));
+			let result = fn.getItem(key);
+			if (result) {
+				result = JSON.parse(fn.getItem(key));
+				result = typeof result === 'string' ? JSON.parse(result) : result;
+			}
+			return result;
 		}
 	}
 	/**
