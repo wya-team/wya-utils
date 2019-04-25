@@ -38,9 +38,10 @@ class Manager {
 			link.onload = () => {
 				resolve();
 			};
-			link.onerror = () => {
+			link.onerror = (e) => {
 				reject();
-				this.cssArr.filter(i !== url);
+				this.cssArr = this.cssArr.filter(i => i !== url);
+				throw new Error(e);
 			};
 
 			document.getElementsByTagName("head")[0].appendChild(link);
@@ -61,9 +62,10 @@ class Manager {
 			script.onload = () => {
 				resolve();
 			};
-			script.onerror = () => {
+			script.onerror = (e) => {
 				reject();
-				this.jsArr.filter(i !== url);
+				this.jsArr = this.jsArr.filter(i => i !== url);
+				throw new Error(e);
 			};
 			document.getElementsByTagName("head")[0].appendChild(script);
 		});
