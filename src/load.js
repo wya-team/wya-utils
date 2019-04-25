@@ -53,7 +53,8 @@ class Manager {
 	 */
 	js(url, opts = {}) {
 		if (this.jsArr.includes(url)) return;
-
+		this.jsArr.push(url);
+		
 		return new Promise((resolve, reject) => {
 			const script = document.createElement('script');
 			script.src = url;
