@@ -2,11 +2,11 @@
 class Manager {
 	constructor() {
 		this.cssCodeArr = [];
-		this.cssArr = [];
-		this.jsArr = [];
+		this.sourceStatus = {};
 	}
 	/**
 	 * style in js
+	 * 同步
 	 */
 	cssCode(code, opts = {}) {
 		if (this.cssCodeArr.includes(code)) return;
@@ -25,12 +25,11 @@ class Manager {
 
 	/**
 	 * css in js
+	 * 异步
+	 * async await
 	 */	
 	css(url, opts = {}) {
-		if (this.cssArr.includes(url)) return;
-		this.cssArr.push(url);
-
-		return new Promise((resolve, reject) => { 
+		let status = this.sourceStatus[url] || new Promise((resolve, reject) => { 
 			let link = document.createElement("link");
 			link.type = "text/css";
 			link.rel = "stylesheet";
@@ -47,16 +46,16 @@ class Manager {
 			document.getElementsByTagName("head")[0].appendChild(link);
 		});
 		
+		return status;
 	}
 
 	/**
 	 * inject js
+	 * 异步
+	 * async await
 	 */
 	js(url, opts = {}) {
-		if (this.jsArr.includes(url)) return;
-		this.jsArr.push(url);
-		
-		return new Promise((resolve, reject) => {
+		let status = this.sourceStatus[url] || new Promise((resolve, reject) => {
 			const script = document.createElement('script');
 			script.src = url;
 			script.onload = () => {
@@ -69,6 +68,8 @@ class Manager {
 			};
 			document.getElementsByTagName("head")[0].appendChild(script);
 		});
+
+		return status;
 	}
 };
 export const Load = new Manager();
