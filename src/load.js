@@ -29,7 +29,7 @@ class Manager {
 	 * async await
 	 */	
 	css(url, opts = {}) {
-		let status = this.sourceStatus[url] || new Promise((resolve, reject) => { 
+		this.sourceStatus[url] = this.sourceStatus[url] || new Promise((resolve, reject) => { 
 			let link = document.createElement("link");
 			link.type = "text/css";
 			link.rel = "stylesheet";
@@ -46,7 +46,7 @@ class Manager {
 			document.getElementsByTagName("head")[0].appendChild(link);
 		});
 		
-		return status;
+		return this.sourceStatus[url];
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Manager {
 	 * async await
 	 */
 	js(url, opts = {}) {
-		let status = this.sourceStatus[url] || new Promise((resolve, reject) => {
+		this.sourceStatus[url] = this.sourceStatus[url] || new Promise((resolve, reject) => {
 			const script = document.createElement('script');
 			script.src = url;
 			script.onload = () => {
@@ -69,7 +69,7 @@ class Manager {
 			document.getElementsByTagName("head")[0].appendChild(script);
 		});
 
-		return status;
+		return this.sourceStatus[url];
 	}
 };
 export const Load = new Manager();
