@@ -15,6 +15,12 @@ describe('cache.js', () => {
 		Storage.set('user', { name: 'wya' });
 		expect(Storage.get('user').name).toBe('wya');
 
+		Storage.set('user', '{"name": "wya1"}');
+		expect(Storage.get('user').name).toBe('wya1');
+
+		Storage.set('user', 'wya');
+		expect(Storage.get('user')).toBe('wya');
+
 		Storage.remove('user');
 		expect(Storage.get('user')).toBe(null);
 
@@ -22,7 +28,14 @@ describe('cache.js', () => {
 		Cookie.set('user', { name: 'wya' });
 		expect(Cookie.get('user').name).toBe('wya');
 
+		Cookie.set('user', '{"name": "wya1"}');
+		expect(Cookie.get('user').name).toBe('wya1');
+
+		Cookie.set('user', 'wya');
+		expect(Cookie.get('user')).toBe('wya');
+
 		Cookie.remove('user');
 		expect(Cookie.get('user')).toBe(null);
+
 	});
 });

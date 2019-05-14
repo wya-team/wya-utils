@@ -68,9 +68,17 @@ class Manager {
 			: window.location.search;
 
 		let regExp = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-		let value = decodeURI(url).substr(1).match(regExp);
+		let val = decodeURIComponent(url).substr(1).match(regExp);
 
-		return value != null ? unescape(value[2]) : null;
+		val = val != null ? unescape(val[2]) : null;
+
+		try {
+			val = JSON.parse(val);
+			// 避免string套string, 暂时处理，可考虑while
+			val = typeof val === 'string' ? JSON.parse(val) : val;
+		} catch (e) {
+		}
+		return val;
 	};
 };
 export const URL = Manager;

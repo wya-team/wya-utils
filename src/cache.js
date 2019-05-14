@@ -1,3 +1,5 @@
+const ENV_IS_DEV = process.env.NODE_ENV === "development";
+
 /**
  * 工厂提供者
  */
@@ -43,7 +45,7 @@ class StorageManager {
 	 */
 	set(key, val, opts = {}) {
 		const { type } = opts;
-		val = JSON.stringify(val);
+		val = typeof val === 'string' ? val : JSON.stringify(val);
 		if (this.isAvailable) {
 			let fn = type === 'session' ? sessionStorage : localStorage;
 			fn.setItem(key, val);
@@ -57,12 +59,15 @@ class StorageManager {
 	get(key, type, opts = {}) {
 		if (this.isAvailable) {
 			let fn = type === 'session' ? sessionStorage : localStorage;
-			let result = fn.getItem(key);
-			if (result) {
-				result = JSON.parse(fn.getItem(key));
-				result = typeof result === 'string' ? JSON.parse(result) : result;
+			let val = fn.getItem(key);
+			try {
+				val = JSON.parse(val);
+				// 避免string套string, 暂时处理，可考虑while
+				val = typeof val === 'string' ? JSON.parse(val) : val;
+			} catch (e) {
+				ENV_IS_DEV && console.error('@wya/utils: 建议使用json');
 			}
-			return result;
+			return val;
 		}
 	}
 	/**
@@ -96,23 +101,29 @@ class CookieManager {
 	get(key, opts = {}) {
 		let r = new RegExp("(?:^|;+|\\s+)" + key + "=([^;]*)");
 		let m = window.document.cookie.match(r);
-		let result = !m ? null : JSON.parse(decodeURIComponent(m[1]));
+		let val = !m ? null : decodeURIComponent(m[1]);
 
-		// 再一次结构，如: JSON.parse(decodeURIComponent('%22%7B%5C%22token%5C%22%3A222%7D%22'))
-		result = typeof result === 'string' ? JSON.parse(result) : result;
-
-		return result;
+		try {
+			val = JSON.parse(val);
+			// 避免string套string, 暂时处理，可考虑while
+			val = typeof val === 'string' ? JSON.parse(val) : val;
+		} catch (e) {
+			ENV_IS_DEV && console.error('@wya/utils: 建议使用json');
+		}
+		return val;
 	}
 	set(key, val, opts = {}) {
 		let { days, path, domain } = opts; 
 		let expire = new Date();
 		expire.setTime(expire.getTime() + (days ? 3600000 * 24 * days : 0.5 * 24 * 60 * 60 * 1000)); // 默认12小时
-		document.cookie = key + '=' + encodeURIComponent(JSON.stringify(val)) + ';expires=' + expire.toGMTString() + ';path=' + (path ? path : '/') + ';' + (domain ? ('domain=' + domain + ';') : '');
+
+		val = typeof val === 'string' ? val : JSON.stringify(val);
+		document.cookie = `${key}=${encodeURIComponent(val)};expires=${expire.toGMTString()};path=${path ? path : '/'};${domain ? `domain=${domain};` : ''}`;
 	}
 	remove(key, opts = {}) {
 		let { path, domain } = opts; 
 		let expires = new Date(0);
-		document.cookie = key + '=;expires=' + expires.toUTCString() + ';path=' + (path ? path : '/') + ';' + (domain ? ('domain=' + domain + ';') : '');
+		document.cookie = `${key}=;expires=${expires.toUTCString()};path=${(path ? path : '/')};${domain ? `domain=${domain};` : ''}`;
 	}
 }
 
