@@ -46,7 +46,7 @@ class Manager {
 			? (auto = !rule.required.length, rule.required(callback))
 			: rule.required;
 
-		if ( required && !value ) {
+		if (required && (!value || (value instanceof Array && !value.length))) {
 			errorMsg = `${rule.name || ''}必填`;
 			auto && callback(errorMsg);
 			return false;
