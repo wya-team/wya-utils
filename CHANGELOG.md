@@ -1,4 +1,8 @@
 # 历史版本
+### 1.2.0 (2019-05-15)
+- URL.get: 如果是json, 返回object, 否则非string
+- Storage, Cookie: 支持非json对象
+
 
 ### 1.1.0 (2019-04-23)
 - Load
