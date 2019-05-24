@@ -1,6 +1,6 @@
 {
   "name": "@wya/utils",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "wya-utils for js",
   "main": "lib/index.js",
   "files": [
@@ -16,7 +16,7 @@
     "dist": "cross-env MODE_ENV=build npm run prompt &&npm run clean && node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack --config ./config/webpack.config.dist.js --color --progress",
     "build": "cross-env UGLIFY_JS=true npm run dist",
     "build:dev": "cross-env UGLIFY_JS=false npm run dist",
-    "lib": "rm -rf ./lib && cross-env NODE_ENV=production babel src --out-dir lib --copy-files --ignore **.test.js,**.md,examples/** && npm publish --access public",
+    "lib": "npm run test && rm -rf ./lib && cross-env NODE_ENV=production babel src --out-dir lib --copy-files --ignore **.test.js,**.md,examples/** && npm publish --access public",
     "clean": "rm -rf ./dist ./demo",
     "lint": "esw ./config/*.config.* ./src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
@@ -27,7 +27,8 @@
     "all": "npm-run-all --parallel --race --continue-on-error lint:watch serve",
     "lint-staged": "lint-staged",
     "pre-commit:install": "cp .hooks/* .git/hooks/",
-    "test": "cross-env BABEL_ENV=default jest --config ./tests/config/jest.config.js  --watch"
+    "test": "cross-env BABEL_ENV=default jest --config ./tests/config/jest.config.js",
+    "test:watch": "npm run test -- --watch"
   },
   "author": "wya-team",
   "license": "MIT",
