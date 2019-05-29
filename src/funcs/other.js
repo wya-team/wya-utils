@@ -3,7 +3,7 @@
  */
 export const canvas2file = (canvas, opts = {}) => {
 
-	const { fileName = '____fileName', getFile = false } = opts;
+	const { filename = '____filename', getFile = false } = opts;
 	
 	// As base64
 	const base64Image = canvas.toDataURL("image/png");
@@ -20,7 +20,7 @@ export const canvas2file = (canvas, opts = {}) => {
 			    u8arr[n] = bstr.charCodeAt(n);
 			}
 			file = new Blob([u8arr], { type: mime });
-			file.name = fileName;
+			file.name = filename;
 		}
 		resolve({ file, base64Image });
 	});
