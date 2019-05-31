@@ -48,6 +48,10 @@ export const getDevice = (opts = {}) => {
 
 	// pc or touch
 	device.touch = (device.android || device.ios) ? true : false;
+
+	// firefox
+	device.firefox = ua.toLowerCase().indexOf('firefox') > -1;
+	
 	return device;
 };
 export const Device = getDevice();
