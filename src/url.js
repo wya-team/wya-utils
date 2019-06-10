@@ -20,7 +20,7 @@ class Manager {
 		}
 
 		if (queryArr.length > 0) {
-			result += `?${queryArr.join('&')}`;
+			result += (result.indexOf('?') > -1 ? '&' : '?') + queryArr.join('&');
 		}
 		return result;
 	};

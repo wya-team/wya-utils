@@ -35,8 +35,8 @@ let baseClone = (target, source) => {
 	for (let k in source) {
 		// 只拷贝实例属性，不进行原型的拷贝
 		if (hasOwn(source, k)) {
-			// 引用类型的数据单独处理
-			if (typeof source[k] == 'object') {
+			// 引用类型的数据单独处理, null -> object
+			if (source[k] && typeof source[k] == 'object') {
 				target[k] = Array.isArray(source[k]) ? [] : {};
 				// 递归处理引用类型数据(利用引用处理)
 				baseClone(target[k], source[k]);
@@ -48,5 +48,9 @@ let baseClone = (target, source) => {
 	}
 	return target;
 };
-export const cloneDeep = (source) => baseClone(Array.isArray(source) ? [] : {}, source);
+export const cloneDeep = (source) => {
+	return source && typeof source === 'object' 
+		? baseClone(Array.isArray(source) ? [] : {}, source) 
+		: source;
+};
 export const cloneDeepEasier = (source) => JSON.parse(JSON.stringify(source));
