@@ -44,10 +44,10 @@ class StorageManager {
 	 * @param val 保存的内容
 	 */
 	set(key, val, opts = {}) {
-		const { type } = opts;
+		const { session } = opts;
 		val = typeof val === 'string' ? val : JSON.stringify(val);
 		if (this.isAvailable) {
-			let fn = type === 'session' ? sessionStorage : localStorage;
+			let fn = session ? sessionStorage : localStorage;
 			fn.setItem(key, val);
 		}
 	}
@@ -56,9 +56,10 @@ class StorageManager {
 	 * @param  {[String]} key 获取的键值
 	 * @return {Object}
 	 */
-	get(key, type, opts = {}) {
+	get(key, opts = {}) {
 		if (this.isAvailable) {
-			let fn = type === 'session' ? sessionStorage : localStorage;
+			const { session } = opts;
+			let fn = session ? sessionStorage : localStorage;
 			let val = fn.getItem(key);
 			try {
 				val = JSON.parse(val);
@@ -74,9 +75,10 @@ class StorageManager {
 	 * 删除缓存
 	 * @param  {[String]} key 删除的键值
 	 */
-	remove(key, type, opts = {}) {
+	remove(key, opts = {}) {
 		if (this.isAvailable) {
-			let fn = type === 'session' ? sessionStorage : localStorage;
+			const { session } = opts;
+			let fn = session ? sessionStorage : localStorage;
 			fn.removeItem(key);
 		}
 	}

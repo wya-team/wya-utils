@@ -19,5 +19,11 @@ describe('url.js', () => {
 		expect(URL.get('user')).toBe('wya');
 		expect(URL.get('user2')).toBe(null);
 
+		expect(URL.merge({
+			path: '/home/main?test=1',
+			query: {
+				user: 'wya'
+			}
+		})).toBe('/home/main?test=1&user=wya');
 	});
 });
