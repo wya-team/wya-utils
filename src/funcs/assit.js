@@ -30,6 +30,7 @@ export const hasOwn = (target, key) => Object.prototype.hasOwnProperty.call(targ
 
 /**
  * 深拷贝
+ * TODO: Date,RegExp 对象
  */
 let baseClone = (target, source) => {
 	for (let k in source) {
