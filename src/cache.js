@@ -1,5 +1,9 @@
 const ENV_IS_DEV = process.env.NODE_ENV === "development";
 
+const PREFIX_NAME = '@wya/utils/';
+const formatKey = (key, version) => {
+	return `${version ? `${PREFIX_NAME}${version}:` : ''}${key}`;
+};
 /**
  * 工厂提供者
  */
@@ -26,17 +30,35 @@ class StorageManager {
 		this.isAvailable = (() => {
 			const test = 'test';
 			try {
-				localStorage.setItem(test, test);
-				localStorage.removeItem(test);
+				window.localStorage.setItem(test, test);
+				window.localStorage.removeItem(test);
 				return true;
 			} catch (e) {
 				return false;
 			}
 		})();
 	}
+
+	getInvokeMethod(opts = {}) {
+		return opts.session 
+			? window.sessionStorage 
+			: window.localStorage;
+	}
+
 	setVersion(version, clear, opts = {}) {
+		if (!this.isAvailable) return;
+
 		this.version = version;
-		// todo 清理之前内容
+
+		// 清除之前的缓存
+		Object.keys(window.localStorage).forEach((item) => {
+			if (
+				item.includes(PREFIX_NAME) 
+				&& !item.includes(`${PREFIX_NAME}${version}`)
+			) {
+				window.localStorage.removeItem(item);
+			}
+		});
 	}
 	/**
 	 * 设置缓存
@@ -44,12 +66,11 @@ class StorageManager {
 	 * @param val 保存的内容
 	 */
 	set(key, val, opts = {}) {
-		const { session } = opts;
+		if (!this.isAvailable) return;
+		key = formatKey(key, this.version);
 		val = typeof val === 'string' ? val : JSON.stringify(val);
-		if (this.isAvailable) {
-			let fn = session ? sessionStorage : localStorage;
-			fn.setItem(key, val);
-		}
+
+		this.getInvokeMethod(opts).setItem(key, val);
 	}
 	/**
 	 * 获取缓存
@@ -57,30 +78,28 @@ class StorageManager {
 	 * @return {Object}
 	 */
 	get(key, opts = {}) {
-		if (this.isAvailable) {
-			const { session } = opts;
-			let fn = session ? sessionStorage : localStorage;
-			let val = fn.getItem(key);
-			try {
-				val = JSON.parse(val);
-				// 避免string套string, 暂时处理，可考虑while
-				val = typeof val === 'string' ? JSON.parse(val) : val;
-			} catch (e) {
-				ENV_IS_DEV && console.error('@wya/utils: 建议使用json');
-			}
-			return val;
+		if (!this.isAvailable) return;
+		key = formatKey(key, this.version);
+
+		let val = this.getInvokeMethod(opts).getItem(key);
+
+		try {
+			val = JSON.parse(val);
+			// 避免string套string, 暂时处理，可考虑while
+			val = typeof val === 'string' ? JSON.parse(val) : val;
+		} catch (e) {
+			ENV_IS_DEV && console.error('@wya/utils: 建议使用json');
 		}
+		return val;
 	}
 	/**
 	 * 删除缓存
 	 * @param  {[String]} key 删除的键值
 	 */
 	remove(key, opts = {}) {
-		if (this.isAvailable) {
-			const { session } = opts;
-			let fn = session ? sessionStorage : localStorage;
-			fn.removeItem(key);
-		}
+		if (!this.isAvailable) return;
+		key = formatKey(key, this.version);
+		this.getInvokeMethod(opts).removeItem(key);
 	}
 }
 
