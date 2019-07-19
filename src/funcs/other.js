@@ -7,7 +7,7 @@ export const base642Blob = (base64Image, filename) => {
 	while (n--){
 		u8arr[n] = bstr.charCodeAt(n);
 	}
-	file = new Blob([u8arr], { type: mime });
+	let file = new Blob([u8arr], { type: mime });
 	file.name = filename;
 
 	return file;

@@ -98,8 +98,12 @@ class StorageManager {
 	 */
 	remove(key, opts = {}) {
 		if (!this.isAvailable) return;
-		key = formatKey(key, this.version);
-		this.getInvokeMethod(opts).removeItem(key);
+		let _key = formatKey(key, this.version);
+		let fn = this.getInvokeMethod(opts);
+
+		// 此处调用两次api
+		fn.removeItem(key); 
+		fn.removeItem(_key);
 	}
 }
 
