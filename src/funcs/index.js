@@ -8,7 +8,7 @@ import {
 } from './assit';
 import { createMixins } from './mixin';
 import { formatMoney, sum2array } from './format';
-import { canvas2file, getWordsLength } from './other';
+import { base642Blob, canvas2file, getWordsLength } from './other';
 
 export const Utils = {
 	preZero,
@@ -20,6 +20,7 @@ export const Utils = {
 	createMixins,
 	formatMoney,
 	sum2array,
+	base642Blob,
 	canvas2file,
 	getWordsLength
 };
