@@ -1,4 +1,10 @@
 export const base642Blob = (base64Image, filename) => {
+
+	// 处理前缀
+	if (!(/data:image\/[^;]+;base64,/g.test(base64Image))) {
+		base64Image += 'data:image/gif;base64,';
+	}
+
 	let arr = base64Image.split(',');
 	let mime = arr[0].match(/:(.*?);/)[1];
 	let bstr = atob(arr[1]);
@@ -24,7 +30,7 @@ export const canvas2file = (canvas, opts = {}) => {
 	return new Promise((resolve, reject) => {
 		let file;
 
-		getFile && (file = base64Image(base64Image, filename));
+		getFile && (file = base642Blob(base64Image, filename));
 
 		resolve({ file, base64Image });
 	});
