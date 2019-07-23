@@ -1,4 +1,5 @@
 import {
+	getUid,
 	preZero,
 	def,
 	isObj,
@@ -11,6 +12,7 @@ import { formatMoney, sum2array } from './format';
 import { base642Blob, canvas2file, getWordsLength } from './other';
 
 export const Utils = {
+	getUid,
 	preZero,
 	def,
 	isObj,

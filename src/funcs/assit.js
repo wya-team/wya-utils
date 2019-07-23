@@ -1,3 +1,13 @@
+const timestamp = +(new Date());
+let index = 0;
+/**
+ * timestamp在某些场景下是有必要的
+ */
+export const getUid = (prefix = 'wya', opts = {}) => {
+	return `${prefix}-${timestamp}-${++index}`;
+};
+
+
 /**
  * 小于10的数字前面加0
  */
