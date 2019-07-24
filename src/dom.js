@@ -1,7 +1,7 @@
 
 const $target = document.createElement('div').style;
-const PREFIX_STYLE = (() => {
-	let rules = {
+const prefix = (() => {
+	let keys = {
 		webkit: 'webkitTransform',
 		Moz: 'MozTransform',
 		O: 'OTransform',
@@ -9,9 +9,20 @@ const PREFIX_STYLE = (() => {
 		standard: 'transform'
 	};
 
-	for (let key in rules) {
-		if ($target[rules[key]] !== undefined) {
-			return key;
+	let values = {
+		webkit: '-webkit-',
+		Moz: '-moz-',
+		O: '-o-',
+		ms: '-ms-',
+		standard: ''
+	};
+
+	for (let key in keys) {
+		if ($target[keys[key]] !== undefined) {
+			return {
+				key,
+				value: values[key]
+			};
 		}
 	}
 
@@ -30,15 +41,18 @@ class Manager {
 	}
 
 	static prefixStyle(style) {
-		if (PREFIX_STYLE === false) {
+		if (prefix === false) {
 			throw new Error('@wya/utils: 不支持style fix');
 		}
 
-		if (PREFIX_STYLE === 'standard') {
+		if (prefix === 'standard') {
 			return style;
 		}
 
-		return PREFIX_STYLE + style.charAt(0).toUpperCase() + style.substr(1);
+		return {
+			key: prefix.key + style.charAt(0).toUpperCase() + style.substr(1),
+			value: prefix.value + style
+		};
 	}
 
 	static hasClass(el, cls) {
