@@ -20,8 +20,8 @@ const prefix = (() => {
 	for (let key in keys) {
 		if ($target[keys[key]] !== undefined) {
 			return {
-				key,
-				value: values[key]
+				camel: key,
+				kebab: values[key]
 			};
 		}
 	}
@@ -40,18 +40,19 @@ class Manager {
 	static once(el, event, handler) { 
 	}
 
-	static prefixStyle(style) {
-		if (prefix === false) {
-			throw new Error('@wya/utils: 不支持style fix');
-		}
-
-		if (prefix === 'standard') {
-			return style;
+	static prefixStyle(v) {
+		
+		if (prefix === false || prefix === 'standard') {
+			!prefix && console.log('@wya/utils: 不支持style fix');
+			return {
+				camel: v,
+				kebab: v
+			};
 		}
 
 		return {
-			key: prefix.key + style.charAt(0).toUpperCase() + style.substr(1),
-			value: prefix.value + style
+			camel: prefix.camel + v.charAt(0).toUpperCase() + v.substr(1),
+			kebab: prefix.kebab + v
 		};
 	}
 

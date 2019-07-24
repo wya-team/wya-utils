@@ -8,7 +8,7 @@ describe('dom.js', () => {
 		expect(typeof Dom.hasClass).toBe('function');
 		expect(typeof Dom.prefixStyle).toBe('function');
 
-		expect(Dom.prefixStyle('transform').key).toBe('webkitTransform');
-		expect(Dom.prefixStyle('transform').value).toBe('-webkit-transform');
+		expect(Dom.prefixStyle('transform').camel).toBe('webkitTransform');
+		expect(Dom.prefixStyle('transform').kebab).toBe('-webkit-transform');
 	});
 });
