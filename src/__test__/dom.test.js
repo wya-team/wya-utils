@@ -6,5 +6,8 @@ describe('dom.js', () => {
 		expect(typeof Dom.addClass).toBe('function');
 		expect(typeof Dom.removeClass).toBe('function');
 		expect(typeof Dom.hasClass).toBe('function');
+		expect(typeof Dom.prefixStyle).toBe('function');
+
+		expect(Dom.prefixStyle('transform')).toBe('webkitTransform');
 	});
 });

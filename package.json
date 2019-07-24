@@ -1,6 +1,6 @@
 {
   "name": "@wya/utils",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "wya-utils for js",
   "main": "lib/index.js",
   "files": [
@@ -98,7 +98,7 @@
     "webpack-merge": "^4.1.2"
   },
   "peerDependencies": {
-      "@babel/runtime": ">=7.0.0"
+    "@babel/runtime": ">=7.0.0"
   },
   "lint-staged": {
     "{src,config}/**/*.{js,jsx}": [

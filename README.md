@@ -86,6 +86,7 @@ npm install @wya/utils --save
 	- addClass
 	- removeClass
 	- hasClass
+	- prefixStyle
 
 <!--  以下内容无视  -->
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
