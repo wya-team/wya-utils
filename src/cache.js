@@ -86,6 +86,9 @@ class StorageManager {
 			this.getInvokeMethod(opts).setItem(key, val);
 		} catch (error) {
 			this.getCache(opts)[key] = val;
+
+			// 异常继续抛出
+			throw new Error(error);
 		}
 	}
 	/**
@@ -97,8 +100,7 @@ class StorageManager {
 		if (!this.isAvailable) return;
 		key = formatKey(key, this.version);
 
-		let val = this.getInvokeMethod(opts).getItem(key);
-		val === null && (val = this.getCache(opts)[key]);
+		let val = this.getCache(opts)[key] || this.getInvokeMethod(opts).getItem(key);
 
 		try {
 			val = JSON.parse(val);
