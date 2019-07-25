@@ -6,6 +6,7 @@ export const getDevice = (opts = {}) => {
 	const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
 	const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
 	const iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+	const wechatDevTools = ua.match(/wechatdevtools/);
 
 	device.ios = device.android = device.iphone = device.ipad = device.androidChrome = false;
 
@@ -45,6 +46,8 @@ export const getDevice = (opts = {}) => {
 	// wechat
 	device.wechat = /MicroMessenger/i.test(ua);
 	device.wechatVersion = (ua.match(/MicroMessenger\/([\d\.]+)/i) || [])[1];
+	// wechatDevTools
+	device.wechatDevTools = /wechatdevtools/.test(ua);
 
 	// pc or touch
 	device.touch = (device.android || device.ios) ? true : false;
