@@ -37,12 +37,24 @@ class StorageManager {
 				return false;
 			}
 		})();
+		this.cache = {
+			sessionStorage: {},
+			localStorage: {}
+		};
+	}
+
+	getInvokeMethodKey(opts = {}) {
+		return opts.session 
+			? 'sessionStorage' 
+			: 'localStorage';
 	}
 
 	getInvokeMethod(opts = {}) {
-		return opts.session 
-			? window.sessionStorage 
-			: window.localStorage;
+		return window[this.getInvokeMethodKey(opts)];
+	}
+
+	getCache(opts = {}) {
+		return this.cache[this.getInvokeMethodKey(opts)];
 	}
 
 	setVersion(version, clear, opts = {}) {
@@ -70,7 +82,11 @@ class StorageManager {
 		key = formatKey(key, this.version);
 		val = typeof val === 'string' ? val : JSON.stringify(val);
 
-		this.getInvokeMethod(opts).setItem(key, val);
+		try {
+			this.getInvokeMethod(opts).setItem(key, val);
+		} catch (error) {
+			this.getCache(opts)[key] = val;
+		}
 	}
 	/**
 	 * 获取缓存
@@ -82,6 +98,7 @@ class StorageManager {
 		key = formatKey(key, this.version);
 
 		let val = this.getInvokeMethod(opts).getItem(key);
+		val === null && (val = this.getCache(opts)[key]);
 
 		try {
 			val = JSON.parse(val);
@@ -104,6 +121,7 @@ class StorageManager {
 		// 此处调用两次api
 		fn.removeItem(key); 
 		fn.removeItem(_key);
+		delete this.getCache(opts)[key];
 	}
 }
 
