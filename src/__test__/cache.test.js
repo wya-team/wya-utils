@@ -9,6 +9,7 @@ describe('cache.js', () => {
 			expect(typeof target.remove).toBe('function');
 
 			target.set('user', { name: 'wya' });
+			
 			expect(target.get('user').name).toBe('wya');
 
 			target.set('user', '{"name": "wya1"}');
