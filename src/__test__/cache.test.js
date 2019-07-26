@@ -3,7 +3,7 @@ import { Storage, Cookie } from '../cache';
 describe('cache.js', () => {
 	test('验证api', () => {
 		expect(Storage === window.Storage).toBe(false);
-		[Storage, Cookie].forEach(target => {
+		const fn = target => {
 			expect(typeof target.get).toBe('function');
 			expect(typeof target.set).toBe('function');
 			expect(typeof target.remove).toBe('function');
@@ -20,6 +20,10 @@ describe('cache.js', () => {
 
 			target.remove('user');
 			expect(target.get('user')).toBe(null);
-		});
+		};
+		[Storage, Cookie].forEach(fn);
+
+		Storage.setVersion('1.0');
+		[Storage, Cookie].forEach(fn);
 	});
 });

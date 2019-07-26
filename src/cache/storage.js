@@ -1,5 +1,5 @@
 import FakeStorage from './fake-storage';
-import { ENV_IS_DEV, formatKey } from './helper';
+import { PREFIX_NAME, ENV_IS_DEV, formatKey } from './helper';
 
 const STORAGE_PERMISSION_ALLOW = (() => {
 	const test = 'test';
