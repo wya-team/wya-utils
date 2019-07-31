@@ -97,6 +97,27 @@ const div = (arg1, arg2, opts = {}) => {
 };
 
 /**
+ * 浮点数计算 取模
+ * @param {*} arg1 
+ * @param {*} arg2 
+ * @param {*} opts 
+ */
+const mod = (arg1, arg2, opts = {}) => {
+	let t1 = 0, t2 = 0;
+	try {
+		t1 = arg1.toString().split(".")[1].length;
+	} catch (e) {
+	}
+	try {
+		t2 = arg2.toString().split(".")[1].length;
+	} catch (e) {
+	}
+	let multiple = 10 ** Math.max(t1, t2);
+
+	return ((arg1 * multiple) % (arg2 * multiple)) / multiple;
+};
+
+/**
  * 针对以上加减乘除
  * 支持链式调用
  * (new Manager(1)).add(1).add(2).val()
@@ -124,6 +145,12 @@ class Manager {
 		this.result = isExchange 
 			? div(val, this.result)
 			: div(this.result, val);
+		return this;
+	}
+	mod(val, isExchange) {
+		this.result = isExchange 
+			? mod(val, this.result)
+			: mod(this.result, val);
 		return this;
 	}
 	extend(fn, ...rest) {
