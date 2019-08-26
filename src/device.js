@@ -34,12 +34,13 @@ export const getDevice = (opts = {}) => {
 		device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
 		device.iphone = true;
 	}
-	// iOS 8+ changed UA
-	if (device.ios && device.osVersion && ua.indexOf('Version/') >= 0) {
-		if (device.osVersion.split('.')[0] === '10') {
-			device.osVersion = ua.toLowerCase().split('version/')[1].split(' ')[0];
-		}
-	}
+	// iOS 8+ changed UA, 暂时不需要
+	// if (device.ios && device.osVersion && ua.indexOf('Version/') >= 0) {
+	// 	if (device.osVersion.split('.')[0] === '10') {
+	// 		device.osVersion = ua.toLowerCase().split('version/')[1].split(' ')[0];
+	// 	}
+	// }
+	// 
 	// Webview
 	device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
 
