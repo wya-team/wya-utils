@@ -53,5 +53,9 @@ export const REGEX_RULES = {
 	name: {
 		value: /^[A-Za-z0-9\u4e00-\u9fa5_-]{1,}$/,
 		msg: "请不要输入特殊字符"
+	},
+	base64: {
+		value: /^\s*data:([a-z]+\/[a-z]+(;[a-z-]+=[a-z-]+)?)?(;base64)?,[a-z0-9!$&',()*+;=\-._~:@/?%\s]*\s*$/i,
+		msg: "请输入正确的base64"
 	}
 };
