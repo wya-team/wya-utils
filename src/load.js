@@ -9,12 +9,23 @@ class Manager {
 	 * 同步
 	 */
 	cssCode(code, opts = {}) {
+		let { id } = opts;
+
+		let el = id && document.getElementsById(id);
+		if (el) {
+			el.innerHTML = code;
+			return;
+		}
+		
 		if (this.cssCodeArr.includes(code)) return;
 		this.cssCodeArr.push(code);
 
-		const style = document.createElement('style');
+		let style = document.createElement('style');
 		style.type = 'text/css';
 		style.rel = 'stylesheet';
+
+		id && style.setAttribute('id', id);
+
 		try {
 			style.innerHTML = code;
 		} catch (ex) {
