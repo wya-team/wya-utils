@@ -11,12 +11,12 @@ class Manager {
 	cssCode(code, opts = {}) {
 		let { id } = opts;
 
-		let el = id && document.getElementsById(id);
+		let el = id && document.getElementById(id);
 		if (el) {
 			el.innerHTML = code;
 			return;
 		}
-		
+
 		if (this.cssCodeArr.includes(code)) return;
 		this.cssCodeArr.push(code);
 
