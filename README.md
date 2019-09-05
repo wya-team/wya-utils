@@ -25,6 +25,7 @@ npm install @wya/utils --save
 	- getWordsLength,
 	- sum2array,
 	- getUid
+	- set
 
 - Storage, Cookie
 	- get

@@ -24,5 +24,18 @@ export const Utils = {
 	sum2array,
 	base642Blob,
 	canvas2file,
-	getWordsLength
+	getWordsLength,
+	/**
+	 * 扩展或重写
+	 */
+	set(key, method) {
+		if (typeof key === 'string') {
+			this[key] = method;
+		} else if (typeof key === 'object')  {
+			let target = key;
+			for (let _ in target) {
+				this[_] = target[_];
+			}
+		}
+	}
 };
