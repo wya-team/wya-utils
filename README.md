@@ -88,6 +88,11 @@ npm install @wya/utils --save
 	- removeClass
 	- hasClass
 	- prefixStyle
+	- getStyle
+	- setStyle
+	- isScroll
+	- getScroller
+	- contains
 
 <!--  以下内容无视  -->
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
