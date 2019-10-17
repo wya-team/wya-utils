@@ -215,7 +215,7 @@ class Manager {
 
 	/**
 	 * hack event.composedPath
-	 * touchevent.composedPath 在ios10.0上返回的是空数组
+	 * touchevent.composedPath 在iOS10.x和iOS9.x上返回的是空数组
 	 * 跟默认的相比，少了window对象
 	 */
 	static composedPath(e) {
