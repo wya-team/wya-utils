@@ -14,6 +14,7 @@ describe('dom.js', () => {
 		expect(typeof Dom.isScroll).toBe('function');
 		expect(typeof Dom.getScroller).toBe('function');
 		expect(typeof Dom.contains).toBe('function');
+		expect(typeof Dom.composedPath).toBe('function');
 	});
 
 	test('-> on/off', () => {
