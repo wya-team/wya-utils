@@ -5,4 +5,4 @@ export { RegEx } from './regex';
 export { Device } from './device';
 export { Calc } from './calc';
 export { Load } from './load';
-export { Dom } from './dom';
+export { DOM } from './dom';

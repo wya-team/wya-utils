@@ -1,20 +1,21 @@
-import { Dom } from '..';
+import { DOM } from '..';
 
 describe('dom.js', () => {
 	test('验证api', () => {
-		expect(typeof Dom).toBe('function');
-		expect(typeof Dom.on).toBe('function');
-		expect(typeof Dom.off).toBe('function');
-		expect(typeof Dom.addClass).toBe('function');
-		expect(typeof Dom.removeClass).toBe('function');
-		expect(typeof Dom.hasClass).toBe('function');
-		expect(typeof Dom.prefixStyle).toBe('function');
-		expect(typeof Dom.getStyle).toBe('function');
-		expect(typeof Dom.setStyle).toBe('function');
-		expect(typeof Dom.isScroll).toBe('function');
-		expect(typeof Dom.getScroller).toBe('function');
-		expect(typeof Dom.contains).toBe('function');
-		expect(typeof Dom.composedPath).toBe('function');
+		expect(typeof DOM).toBe('function');
+		expect(typeof DOM.on).toBe('function');
+		expect(typeof DOM.off).toBe('function');
+		expect(typeof DOM.addClass).toBe('function');
+		expect(typeof DOM.removeClass).toBe('function');
+		expect(typeof DOM.hasClass).toBe('function');
+		expect(typeof DOM.prefixStyle).toBe('function');
+		expect(typeof DOM.getStyle).toBe('function');
+		expect(typeof DOM.setStyle).toBe('function');
+		expect(typeof DOM.isScroll).toBe('function');
+		expect(typeof DOM.getScroller).toBe('function');
+		expect(typeof DOM.contains).toBe('function');
+		expect(typeof DOM.composedPath).toBe('function');
+		expect(typeof DOM.scrollIntoView).toBe('function');
 	});
 
 	test('-> on/off', () => {
@@ -29,20 +30,20 @@ describe('dom.js', () => {
 			count++;
 		};
 
-		Dom.on(window.document, 'keydown', handler);
+		DOM.on(window.document, 'keydown', handler);
 		trigger();
 		expect(count).toBe(1);
 		trigger();
 		expect(count).toBe(2);
 
 
-		Dom.off(window.document, 'keydown', handler);
+		DOM.off(window.document, 'keydown', handler);
 		trigger();
 		expect(count).toBe(2);
 		trigger();
 		expect(count).toBe(2);
 
-		Dom.once(window.document, 'keydown', handler);
+		DOM.once(window.document, 'keydown', handler);
 
 		trigger();
 		expect(count).toBe(3);
@@ -51,8 +52,8 @@ describe('dom.js', () => {
 	});
 
 	test('-> prefixStyle', () => {
-		expect(Dom.prefixStyle('transform').camel).toBe('webkitTransform');
-		expect(Dom.prefixStyle('transform').kebab).toBe('-webkit-transform');
+		expect(DOM.prefixStyle('transform').camel).toBe('webkitTransform');
+		expect(DOM.prefixStyle('transform').kebab).toBe('-webkit-transform');
 	});
 
 	test('-> get/setStyle/getScroller', () => {
@@ -61,10 +62,10 @@ describe('dom.js', () => {
 		div.style.overflow = 'auto';
 		div.style.padding = '40px';
 
-		Dom.setStyle(div, 'height', '200px');
+		DOM.setStyle(div, 'height', '200px');
 
-		expect(Dom.getStyle(div, 'width')).toBe('200px');
-		expect(Dom.getStyle(div, 'height')).toBe('200px');
+		expect(DOM.getStyle(div, 'width')).toBe('200px');
+		expect(DOM.getStyle(div, 'height')).toBe('200px');
 
 
 		let span = document.createElement('span');
@@ -72,8 +73,8 @@ describe('dom.js', () => {
 
 		document.body.style.marginTop = '20px';
 		document.body.appendChild(div);
-		expect(Dom.getScroller(span)).toBe(div);
-		// expect(Dom.contains(span, div)).toBe(false);
+		expect(DOM.getScroller(span)).toBe(div);
+		// expect(DOM.contains(span, div)).toBe(false);
 	});
 });
 

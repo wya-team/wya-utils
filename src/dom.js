@@ -51,6 +51,15 @@ const events = (() => {
 	};
 })();
 
+if (!window.requestAnimationFrame) {
+	window.requestAnimationFrame = (
+		window.webkitRequestAnimationFrame 
+		|| window.mozRequestAnimationFrame 
+		|| window.msRequestAnimationFrame 
+		|| (cb => window.setTimeout(cb, 1000 / 60))
+	);
+}
+
 /**
  * 可做一些兼容处理
  */
@@ -228,5 +237,32 @@ class Manager {
 		}
 		return path;
 	}
+
+	static scrollIntoView(el, opts = {}) {
+		const { from = 0, to, duration = 300, onEnd } = opts;
+		
+		const difference = Math.abs(from - to);
+		const step = Math.ceil(difference / duration * 50);
+
+		function scroll(start, end, step) {
+			if (start === end) {
+				onEnd && onEnd();
+				return;
+			}
+
+			let d = (start + step > end) ? end : start + step;
+			if (start > end) {
+				d = (start - step < end) ? end : start - step;
+			}
+
+			if (el === window) {
+				window.scrollTo(d, d);
+			} else {
+				el.scrollTop = d;
+			}
+			window.requestAnimationFrame(() => scroll(d, end, step));
+		}
+		scroll(from, to, step);
+	};
 };
-export const Dom = Manager;
+export const DOM = Manager;
