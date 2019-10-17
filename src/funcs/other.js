@@ -2,7 +2,11 @@ export const base642Blob = (base64Image, filename) => {
 
 	// 处理前缀
 	if (!(/data:image\/[^;]+;base64,/g.test(base64Image))) {
-		base64Image = 'data:image/jpeg;base64,' + base64Image;
+		let suffix;
+		if (typeof filename === 'string' && filename.includes('.')) {
+			suffix = filename.split('.').pop();
+		}
+		base64Image = `data:image/${ suffix ? suffix : 'jpeg'};base64,${base64Image}`;
 	}
 
 	let arr = base64Image.split(',');
