@@ -80,20 +80,22 @@ npm install @wya/utils --save
 	- js
 
 
-- DOM
+- DOM/$
+	- prefixStyle
+	- composedPath
+
+- DOM/$(el)
 	- on
 	- off 
 	- once
 	- addClass
 	- removeClass
 	- hasClass
-	- prefixStyle
 	- getStyle
 	- setStyle
 	- isScroll
 	- getScroller
 	- contains
-	- composedPath
 	- scrollIntoView
 
 <!--  以下内容无视  -->

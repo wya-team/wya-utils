@@ -1,6 +1,6 @@
 {
   "name": "@wya/utils",
-  "version": "1.4.18",
+  "version": "1.5.1",
   "description": "wya-utils for js",
   "main": "lib/index.js",
   "files": [

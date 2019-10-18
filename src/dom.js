@@ -64,75 +64,7 @@ if (!window.requestAnimationFrame) {
  * 可做一些兼容处理
  */
 class DOMManager {
-	static on(el, event, handler, opts = false) { 
-		el[events.add](events.prefix + event, handler, opts);
-	}
-
-	static off(el, event, handler, opts = false) { 
-		el[events.remove](events.prefix + event, handler, opts);
-	}
-
-	static once(el, event, handler, opts = false) { 
-		let listener = function() {
-			handler && handler.apply(this, arguments);
-			DOMManager.off(el, event, listener);
-		};
-		DOMManager.on(el, event, listener);
-	}
-
-	static hasClass(el, cls) {
-		if (!el || !cls) return false;
-		if (cls.includes(' ')) {
-			throw new Error('@wya/utils: 类名不应该包含空格');
-		};
-		if (el.classList) {
-			return el.classList.contains(cls);
-		} else {
-			return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
-		}
-	}
-
-	static addClass(el, cls) {
-		if (!el) return;
-		let curClass = el.className;
-		let classes = (cls || '').split(' ');
-
-		for (let i = 0, j = classes.length; i < j; i++) {
-			let clsName = classes[i];
-			if (clsName) {
-				if (el.classList) {
-					el.classList.add(clsName);
-				} else if (!DOMManager.hasClass(el, clsName)) {
-					curClass += ' ' + clsName;
-				}
-			}
-		}
-		if (!el.classList) {
-			el.className = curClass;
-		}
-	}
-	static removeClass(el, cls) {
-		if (!el || !cls) return;
-		let classes = cls.split(' ');
-		let curClass = ' ' + el.className + ' ';
-
-		for (let i = 0, j = classes.length; i < j; i++) {
-			let clsName = classes[i];
-			if (clsName) {
-				if (el.classList) {
-					el.classList.remove(clsName);
-				} else if (DOMManager.hasClass(el, clsName)) {
-					curClass = curClass.replace(' ' + clsName + ' ', ' ');
-				}
-			}
-		}
-		if (!el.classList) {
-			el.className = trim(curClass);
-		}
-	}
-
 	static prefixStyle(v) {
-		
 		if (prefix === false || prefix === 'standard') {
 			!prefix && console.log('@wya/utils: 不支持style fix');
 			return {
@@ -145,81 +77,6 @@ class DOMManager {
 			camel: prefix.camel + v.charAt(0).toUpperCase() + v.substr(1),
 			kebab: prefix.kebab + v
 		};
-	}
-
-	static getStyle(el, name) {
-		if (!el || !name) return null;
-		if (name === 'float') {
-			name = 'cssFloat';
-		}
-
-		try {
-			let computed = document.defaultView.getComputedStyle(el, '');
-			return el.style[name] || computed ? computed[name] : null;
-		} catch (e) {
-			return el.style[name];
-		}
-	}
-
-	static setStyle(el, name, value) {
-		if (!el || !name) return;
-
-		if (typeof name === 'object') {
-			for (let prop in name) {
-				if (name.hasOwnProperty(prop)) {
-					DOMManager.setStyle(el, prop, name[prop]);
-				}
-			}
-		} else {
-			el.style[name] = value;
-		}
-	}
-
-	static isScroll(el, vertical) {
-		let overflow = DOMManager.getStyle(el, `overflow-${vertical ? 'y' : 'x'}`);
-		overflow = overflow || DOMManager.getStyle(el, 'overflow');
-		return overflow.match(/(scroll|auto)/);
-	}
-
-	static getScroller(el, vertical) {
-		let parent = el;
-		while (parent) {
-			if ([window, document, document.documentElement].includes(parent)) {
-				return window;
-			}
-			if (DOMManager.isScroll(parent, vertical)) {
-				return parent;
-			}
-			parent = parent.parentNode;
-		}
-
-		return parent;
-	}
-
-	/**
-	 * 与container.contains(el)不同
-	 */
-	static contains(el, container) {
-		if (!el || !container) return false;
-
-		const elRect = el.getBoundingClientRect();
-		let containerRect;
-
-		if ([window, document, document.documentElement, null, undefined].includes(container)) {
-			containerRect = {
-				top: 0,
-				right: window.innerWidth,
-				bottom: window.innerHeight,
-				left: 0
-			};
-		} else {
-			containerRect = container.getBoundingClientRect();
-		}
-
-		return elRect.top < containerRect.bottom &&
-			elRect.bottom > containerRect.top &&
-			elRect.right > containerRect.left &&
-			elRect.left < containerRect.right;
 	}
 
 	/**
@@ -238,11 +95,186 @@ class DOMManager {
 		return path;
 	}
 
-	static scrollIntoView(el, opts = {}) {
-		const { from = 0, to, duration = 300, onEnd } = opts;
+	constructor(el, opts = {}) {
+		this.$el = el;
+	}
+
+	on(event, handler, opts = false) { 
+		this.$el[events.add](events.prefix + event, handler, opts);
+
+		return this;
+	}
+
+	off(event, handler, opts = false) { 
+		this.$el[events.remove](events.prefix + event, handler, opts);
+
+		return this;
+	}
+
+	once(event, handler, opts = false) { 
+		let _this = this;
+		let listener = function() {
+			handler && handler.apply(this, arguments);
+			_this.off(event, listener, opts);
+		};
+		this.on(event, listener, opts);
+
+		return this;
+	}
+
+	hasClass(cls) {
+		if (!cls) return false;
+
+		let el = this.$el;
+		if (cls.includes(' ')) {
+			throw new Error('@wya/utils: 类名不应该包含空格');
+		};
+		if (el.classList) {
+			return el.classList.contains(cls);
+		} else {
+			return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
+		}
+	}
+
+	addClass(cls) {
+		let el = this.$el;
+		let curClass = el.className;
+		let classes = (cls || '').split(' ');
+
+		for (let i = 0, j = classes.length; i < j; i++) {
+			let clsName = classes[i];
+			if (clsName) {
+				if (el.classList) {
+					el.classList.add(clsName);
+				} else if (!this.hasClass(clsName)) {
+					curClass += ' ' + clsName;
+				}
+			}
+		}
+		if (!el.classList) {
+			el.className = curClass;
+		}
+
+		return this;
+	}
+
+	removeClass(cls) {
+		let el = this.$el;
+		let classes = cls.split(' ');
+		let curClass = ' ' + el.className + ' ';
+
+		for (let i = 0, j = classes.length; i < j; i++) {
+			let clsName = classes[i];
+			if (clsName) {
+				if (el.classList) {
+					el.classList.remove(clsName);
+				} else if (this.hasClass(clsName)) {
+					curClass = curClass.replace(' ' + clsName + ' ', ' ');
+				}
+			}
+		}
+		if (!el.classList) {
+			el.className = trim(curClass);
+		}
+
+		return this;
+	}
+
+	getStyle(name) {
+		if (!name) return null;
+
+		if (name === 'float') {
+			name = 'cssFloat';
+		}
+
+		let el = this.$el;
+		try {
+			let computed = document.defaultView.getComputedStyle(el, '');
+			return el.style[name] || computed ? computed[name] : null;
+		} catch (e) {
+			return el.style[name];
+		}
+	}
+
+	setStyle(name, value) {
+		if (!name) return this;
+
+		let el = this.$el;
+		if (typeof name === 'object') {
+			for (let prop in name) {
+				if (name.hasOwnProperty(prop)) {
+					this.setStyle(prop, name[prop]);
+				}
+			}
+		} else {
+			el.style[name] = value;
+		}
+
+		return this;
+	}
+
+	isScroll(vertical) {
+		let el = this.$el;
+
+		let overflow = this.getStyle(`overflow-${vertical ? 'y' : 'x'}`);
+		overflow = overflow || this.getStyle('overflow');
+		return overflow.match(/(scroll|auto)/);
+	}
+
+	getScroller(vertical) {
+		let parent = this.$el;
+		while (parent) {
+			if ([window, document, document.documentElement].includes(parent)) {
+				return window;
+			}
+			let parent$ = new DOMManager(parent);
+			if (parent$.isScroll(vertical)) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+
+		return parent;
+	}
+
+	/**
+	 * 与container.contains(el)不同
+	 */
+	contains(child) {
+		if (!child) return false;
+
+		let el = this.$el;
+		let childRect = child.getBoundingClientRect();
+		let elRect;
+
+		if ([window, document, document.documentElement, null, undefined].includes(el)) {
+			elRect = {
+				top: 0,
+				right: window.innerWidth,
+				bottom: window.innerHeight,
+				left: 0
+			};
+		} else {
+			elRect = el.getBoundingClientRect();
+		}
+
+		return childRect.top < elRect.bottom &&
+			childRect.bottom > elRect.top &&
+			childRect.right > elRect.left &&
+			childRect.left < elRect.right;
+	}
+
+	/**
+	 * el 必须是滚动的(TODO: 使用getScroller获得滚动或使用scroller参数)
+	 * TODO: 这个后续还需要优化
+	 * https://github.com/yiminghe/dom-scroll-into-view
+	 */
+	scrollIntoView(opts = {}) {
+		let el = this.$el;
+		let { from = 0, to, duration = 300, onEnd, scroller } = opts;
 		
-		const difference = Math.abs(from - to);
-		const step = Math.ceil(difference / duration * 50);
+		let difference = Math.abs(from - to);
+		let step = Math.ceil(difference / duration * 50);
 
 		function scroll(start, end, step) {
 			if (start === end) {
@@ -263,6 +295,18 @@ class DOMManager {
 			window.requestAnimationFrame(() => scroll(d, end, step));
 		}
 		scroll(from, to, step);
-	};
+
+		return this;
+	}
 };
-export const DOM = DOMManager;
+
+const DOM = (el, opts = {}) => new DOMManager(el, opts);
+DOM.fn = DOMManager.prototype;
+
+DOM.prefixStyle = DOMManager.prefixStyle;
+DOM.composedPath = DOMManager.composedPath;
+
+// 简写
+const $ = DOM;
+
+export { DOM, $ };

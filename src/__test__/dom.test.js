@@ -1,21 +1,23 @@
-import { DOM } from '..';
+import { DOM, $ } from '..';
 
 describe('dom.js', () => {
 	test('验证api', () => {
-		expect(typeof DOM).toBe('function');
-		expect(typeof DOM.on).toBe('function');
-		expect(typeof DOM.off).toBe('function');
-		expect(typeof DOM.addClass).toBe('function');
-		expect(typeof DOM.removeClass).toBe('function');
-		expect(typeof DOM.hasClass).toBe('function');
-		expect(typeof DOM.prefixStyle).toBe('function');
-		expect(typeof DOM.getStyle).toBe('function');
-		expect(typeof DOM.setStyle).toBe('function');
-		expect(typeof DOM.isScroll).toBe('function');
-		expect(typeof DOM.getScroller).toBe('function');
-		expect(typeof DOM.contains).toBe('function');
-		expect(typeof DOM.composedPath).toBe('function');
-		expect(typeof DOM.scrollIntoView).toBe('function');
+		expect(DOM === $).toBe(true);
+		expect(typeof $).toBe('function');
+		expect(typeof $.fn).toBe('object');
+		expect(typeof $.prefixStyle).toBe('function');
+		expect(typeof $.composedPath).toBe('function');
+		expect(typeof $.fn.on).toBe('function');
+		expect(typeof $.fn.off).toBe('function');
+		expect(typeof $.fn.addClass).toBe('function');
+		expect(typeof $.fn.removeClass).toBe('function');
+		expect(typeof $.fn.hasClass).toBe('function');
+		expect(typeof $.fn.getStyle).toBe('function');
+		expect(typeof $.fn.setStyle).toBe('function');
+		expect(typeof $.fn.isScroll).toBe('function');
+		expect(typeof $.fn.getScroller).toBe('function');
+		expect(typeof $.fn.contains).toBe('function');
+		expect(typeof $.fn.scrollIntoView).toBe('function');
 	});
 
 	test('-> on/off', () => {
@@ -30,20 +32,19 @@ describe('dom.js', () => {
 			count++;
 		};
 
-		DOM.on(window.document, 'keydown', handler);
+		DOM(window.document).on('keydown', handler);
 		trigger();
 		expect(count).toBe(1);
 		trigger();
 		expect(count).toBe(2);
 
-
-		DOM.off(window.document, 'keydown', handler);
+		DOM(window.document).off('keydown', handler);
 		trigger();
 		expect(count).toBe(2);
 		trigger();
 		expect(count).toBe(2);
 
-		DOM.once(window.document, 'keydown', handler);
+		DOM(window.document).once('keydown', handler);
 
 		trigger();
 		expect(count).toBe(3);
@@ -56,25 +57,38 @@ describe('dom.js', () => {
 		expect(DOM.prefixStyle('transform').kebab).toBe('-webkit-transform');
 	});
 
-	test('-> get/setStyle/getScroller', () => {
+	test('-> style/class/getScroller', () => {
 		let div = document.createElement('div');
 		div.style.width = '200px';
 		div.style.overflow = 'auto';
 		div.style.padding = '40px';
 
-		DOM.setStyle(div, 'height', '200px');
+		$(div).setStyle('height', '200px');
 
-		expect(DOM.getStyle(div, 'width')).toBe('200px');
-		expect(DOM.getStyle(div, 'height')).toBe('200px');
-
+		expect($(div).getStyle('width')).toBe('200px');
+		expect($(div).getStyle('height')).toBe('200px');
 
 		let span = document.createElement('span');
 		div.appendChild(span);
 
 		document.body.style.marginTop = '20px';
 		document.body.appendChild(div);
-		expect(DOM.getScroller(span)).toBe(div);
-		// expect(DOM.contains(span, div)).toBe(false);
+		expect($(div).getScroller()).toBe(div);
+
+
+		$(div).addClass('test1').addClass('test2').addClass('test3');
+		expect(div.classList.contains('test1')).toBe(true);
+		expect(div.classList.contains('test2')).toBe(true);
+		expect(div.classList.contains('test3')).toBe(true);
+		expect(div.classList.contains('test4')).toBe(false);
+
+		$(div).removeClass('test1').removeClass('test2');
+		expect(div.classList.contains('test1')).toBe(false);
+		expect(div.classList.contains('test2')).toBe(false);
+		expect(div.classList.contains('test3')).toBe(true);
+
+		// 测试环境下为false
+		expect($(div).contains(span)).toBe(false);
 	});
 });
 
