@@ -63,7 +63,7 @@ if (!window.requestAnimationFrame) {
 /**
  * 可做一些兼容处理
  */
-class Manager {
+class DOMManager {
 	static on(el, event, handler, opts = false) { 
 		el[events.add](events.prefix + event, handler, opts);
 	}
@@ -75,9 +75,9 @@ class Manager {
 	static once(el, event, handler, opts = false) { 
 		let listener = function() {
 			handler && handler.apply(this, arguments);
-			Manager.off(el, event, listener);
+			DOMManager.off(el, event, listener);
 		};
-		Manager.on(el, event, listener);
+		DOMManager.on(el, event, listener);
 	}
 
 	static hasClass(el, cls) {
@@ -102,7 +102,7 @@ class Manager {
 			if (clsName) {
 				if (el.classList) {
 					el.classList.add(clsName);
-				} else if (!Manager.hasClass(el, clsName)) {
+				} else if (!DOMManager.hasClass(el, clsName)) {
 					curClass += ' ' + clsName;
 				}
 			}
@@ -121,7 +121,7 @@ class Manager {
 			if (clsName) {
 				if (el.classList) {
 					el.classList.remove(clsName);
-				} else if (Manager.hasClass(el, clsName)) {
+				} else if (DOMManager.hasClass(el, clsName)) {
 					curClass = curClass.replace(' ' + clsName + ' ', ' ');
 				}
 			}
@@ -167,7 +167,7 @@ class Manager {
 		if (typeof name === 'object') {
 			for (let prop in name) {
 				if (name.hasOwnProperty(prop)) {
-					Manager.setStyle(el, prop, name[prop]);
+					DOMManager.setStyle(el, prop, name[prop]);
 				}
 			}
 		} else {
@@ -176,8 +176,8 @@ class Manager {
 	}
 
 	static isScroll(el, vertical) {
-		let overflow = Manager.getStyle(el, `overflow-${vertical ? 'y' : 'x'}`);
-		overflow = overflow || Manager.getStyle(el, 'overflow');
+		let overflow = DOMManager.getStyle(el, `overflow-${vertical ? 'y' : 'x'}`);
+		overflow = overflow || DOMManager.getStyle(el, 'overflow');
 		return overflow.match(/(scroll|auto)/);
 	}
 
@@ -187,7 +187,7 @@ class Manager {
 			if ([window, document, document.documentElement].includes(parent)) {
 				return window;
 			}
-			if (Manager.isScroll(parent, vertical)) {
+			if (DOMManager.isScroll(parent, vertical)) {
 				return parent;
 			}
 			parent = parent.parentNode;
@@ -265,4 +265,4 @@ class Manager {
 		scroll(from, to, step);
 	};
 };
-export const DOM = Manager;
+export const DOM = DOMManager;

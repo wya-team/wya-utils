@@ -1,5 +1,5 @@
 
-class Manager {
+class LoadManager {
 	constructor() {
 		this.cssCodeArr = [];
 		this.sourceStatus = {};
@@ -83,4 +83,4 @@ class Manager {
 		return this.sourceStatus[url];
 	}
 };
-export const Load = new Manager();
+export const Load = new LoadManager();

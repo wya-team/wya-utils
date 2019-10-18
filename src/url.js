@@ -1,5 +1,5 @@
 
-class Manager {
+class URLManager {
 	/**
 	 * 创建新的url
 	 */
@@ -81,4 +81,4 @@ class Manager {
 		return val;
 	};
 };
-export const URL = Manager;
+export const URL = URLManager;

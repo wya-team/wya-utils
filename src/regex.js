@@ -8,7 +8,7 @@ const format = (rules = {}) => {
 	}, {});
 };
 
-class Manager {
+class RegExManager {
 	constructor(rules = {}) {
 		this._generate(rules);
 
@@ -91,4 +91,4 @@ class Manager {
 // 	validator: Regex.validator
 // }
 
-export const RegEx = new Manager(REGEX_RULES);
+export const RegEx = new RegExManager(REGEX_RULES);

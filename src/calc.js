@@ -120,10 +120,10 @@ const mod = (arg1, arg2, opts = {}) => {
 /**
  * 针对以上加减乘除
  * 支持链式调用
- * (new Manager(1)).add(1).add(2).val()
+ * (new CalcManager(1)).add(1).add(2).val()
  * class -> babel 
  */
-class Manager {
+class CalcManager {
 	constructor(val, opts = {}) {
 		this.result = val;
 	}
@@ -165,4 +165,4 @@ class Manager {
 }
 
 // Calc(1).add(1).val();
-export const Calc = v => new Manager(v);
+export const Calc = v => new CalcManager(v);
