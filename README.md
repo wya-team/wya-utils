@@ -80,7 +80,7 @@ npm install @wya/utils --save
 	- js
 
 
-- Dom
+- DOM
 	- on
 	- off 
 	- once
@@ -93,6 +93,8 @@ npm install @wya/utils --save
 	- isScroll
 	- getScroller
 	- contains
+	- composedPath
+	- scrollIntoView
 
 <!--  以下内容无视  -->
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
