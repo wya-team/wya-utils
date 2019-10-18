@@ -62,6 +62,7 @@ if (!window.requestAnimationFrame) {
 
 /**
  * 可做一些兼容处理
+ * el 使用prototype, 不涉及el使用 static
  */
 class DOMManager {
 	static prefixStyle(v) {
