@@ -97,7 +97,16 @@ class DOMManager {
 	}
 
 	constructor(el, opts = {}) {
-		this.$el = el;
+		// window.document/document.body
+		if (typeof el === 'object') {
+			this.$el = el;
+		} else if (typeof el === 'string') {
+			this.$el = document.querySelector(el);
+		}
+
+		if (!this.$el) {
+			throw new Error('@wya/utils - DOM: el缺失');
+		}
 	}
 
 	on(event, handler, opts = false) { 
@@ -127,9 +136,11 @@ class DOMManager {
 		if (!cls) return false;
 
 		let el = this.$el;
+
 		if (cls.includes(' ')) {
-			throw new Error('@wya/utils: 类名不应该包含空格');
-		};
+			throw new Error('@wya/utils - DOM: 类名不应该包含空格');
+		}
+
 		if (el.classList) {
 			return el.classList.contains(cls);
 		} else {
