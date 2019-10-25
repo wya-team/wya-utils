@@ -25,5 +25,13 @@ describe('url.js', () => {
 				user: 'wya'
 			}
 		})).toBe('/home/main?test=1&user=wya');
+
+		let url = '/xls/agent/join/goods-set-meal?user=wya&name=%3F%3F%E5%88%86%E4%BA%AB%3F%3F%3F&mode=2';
+		expect(URL.parse(url).query.mode).toBe(2);
+
+		// 设置当前网址
+		window.history.replaceState(null, null, url);
+		expect(URL.parse().query.mode).toBe(2);
+
 	});
 });

@@ -31,7 +31,7 @@ class URLManager {
 	 */	
 	static parse = (url, opts = {}) => {
 		// TODO: 使用 new window.URL(url);
-		url = url || `${location.pathname}${decodeURIComponent(location.search)}`;
+		url = url || `${location.pathname}${location.search}`;
 		let path = [];
 		const query = {};
 		// const urlArr = url.replace('/', '').split('?');
@@ -42,7 +42,7 @@ class URLManager {
 			urlArr[1].split('&').forEach(str => {
 				const arr = str.split('=');
 				const key = arr[0];
-				const value = arr[1];
+				const value = decodeURIComponent(arr[1]);
 				// 009, ''
 				if (
 					isNaN(value) 
