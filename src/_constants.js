@@ -58,8 +58,8 @@ export const REGEX_RULES = {
 		value: /^\s*data:([a-z]+\/[a-z]+(;[a-z-]+=[a-z-]+)?)?(;base64)?,[a-z0-9!$&',()*+;=\-._~:@/?%\s]*\s*$/i,
 		msg: "请输入正确的base64"
 	},
-	url: {
-		value: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
-		msg: "请输入正确的url地址"
-	}
+	URLScheme: {
+		value: /[a-zA-z]+:\/\/[^\s]*/,
+		msg: "请填写正确网页地址协议"
+	},
 };
