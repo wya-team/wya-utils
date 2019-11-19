@@ -73,6 +73,8 @@ $ npm run pub
 
 ### `Utils` 
 
+---
+
 #### `def`
 
 - `Utils.def(target: Object, key: String, value: any, enumerable: Boolean)`
@@ -89,6 +91,8 @@ $ npm run pub
 Utils.def({}, 'name', 'wya-utils');
 ```
 
+---
+
 #### `isObj`
 
 `Utils.isObj(target: Object)`
@@ -101,6 +105,8 @@ Utils.def({}, 'name', 'wya-utils');
 ```javascript
 Utils.isObj({});
 ```
+
+---
 
 #### `hasOwn`
 
@@ -116,6 +122,8 @@ Utils.isObj({});
 Utils.hasOwn({}, 'name');
 ```
 
+---
+
 #### `preZero`
 
 `Utils.preZero(value: Number)`
@@ -129,6 +137,8 @@ Utils.hasOwn({}, 'name');
 Utils.preZero(1);
 ```
 
+
+---
 
 #### `cloneDeep`
 
@@ -145,6 +155,8 @@ Utils.cloneDeep({});
 
 > 不支持Date/Regex等
 
+---
+
 #### `cloneDeepEasier`
 
 `Utils.cloneDeepEasier(target: Object)`
@@ -158,6 +170,8 @@ Utils.cloneDeep({});
 Utils.cloneDeepEasier({});
 ```
 
+---
+
 #### `createMixins`
 
 `Utils.createMixins(target: Object)`
@@ -170,6 +184,8 @@ Utils.cloneDeepEasier({});
 ```javascript
 Utils.createMixins(...mixins);
 ```
+
+---
 
 #### `formatMoney`
 
@@ -185,6 +201,8 @@ Utils.createMixins(...mixins);
 Utils.formatMoney(money, {});
 ```
 
+---
+
 #### `canvas2file`
 
 `Utils.canvas2file(canvas: Object, options: Object)`
@@ -198,6 +216,8 @@ Utils.formatMoney(money, {});
 ```javascript
 Utils.canvas2file(canvas, {});
 ```
+
+---
 
 #### `base622Blob`
 
@@ -214,6 +234,8 @@ Utils.base622Blob('data:img/jpg;base64', 'name.jpg');
 ```
 
 
+---
+
 #### `getWordsLength`
 
 `Utils.getWordsLength(value: String)`
@@ -226,6 +248,8 @@ Utils.base622Blob('data:img/jpg;base64', 'name.jpg');
 ```javascript
 Utils.getWordsLength('xxxx\nxxxx');
 ```
+
+---
 
 #### `sum2array`
 
@@ -240,6 +264,8 @@ Utils.getWordsLength('xxxx\nxxxx');
 Utils.sum2array(3);
 ```
 
+---
+
 #### `getUid`
 
 `Utils.getUid(prefix: String, options: Object)`
@@ -253,6 +279,8 @@ Utils.sum2array(3);
 ```javascript
 Utils.getUid();
 ```
+
+---
 
 #### `set`
 
@@ -270,6 +298,8 @@ Utils.set(key, );
 
 ### `Storage/Cookie` 
 
+---
+
 #### `get`
 
 `Storage.get(key: String, options: Function)`
@@ -283,6 +313,8 @@ Utils.set(key, );
 ```javascript
 Storage.get(key);
 ```
+
+---
 
 #### `set`
 
@@ -299,6 +331,8 @@ Storage.get(key);
 Storage.set(key);
 ```
 
+---
+
 #### `remove`
 
 `Storage.remove(key: String, options: Function)`
@@ -312,6 +346,8 @@ Storage.set(key);
 ```javascript
 Storage.remove(key);
 ```
+
+---
 
 #### `setVersion`
 
@@ -328,32 +364,50 @@ Storage.setVersion(`1.0.0`);
 
 ### `Device` 
 
+---
+
 #### `androidChrome`
 - type: `Boolean`
+
+---
 
 #### `ipad`
 - type: `Boolean`
 
+---
+
 #### `iphone`
 - type: `Boolean`
+
+---
 
 #### `android`
 - type: `Boolean`
 
+---
+
 #### `ios`
 - type: `Boolean`
+
+---
 
 #### `webView`
 - type: `Boolean`
 
+---
+
 #### `wechat`
 - type: `Boolean`
+
+---
 
 #### `touch`
 - type: `Boolean`
 
 
 ### `RegEx` 
+
+---
 
 #### `set`
 
@@ -382,6 +436,8 @@ RegEx.set({
 });
 ```
 
+---
+
 #### `validator`
 
 `RegEx.validator(rule: Object, value: any, next: Function, options: Object)`
@@ -404,44 +460,70 @@ RegEx.set({
 RegEx.validator(RegEx.num, '2', (error) => {});
 ```
 
+---
+
 #### `num`
 - type: `Object`
+
+---
 
 #### `integer`
 - type: `Object`
 
+---
+
 #### `email`
 - type: `Object`
+
+---
 
 #### `time`
 - type: `Object`
 
+---
+
 #### `IDCard`
 - type: `Object`
+
+---
 
 #### `price`
 - type: `Object`
 
+---
+
 #### `mobile`
 - type: `Object`
+
+---
 
 #### `phone`
 - type: `Object`
 
+---
+
 #### `postalcode`
 - type: `Object`
+
+---
 
 #### `zipcode`
 - type: `Object`
 
+---
+
 #### `wechat`
 - type: `Object`
+
+---
 
 #### `name`
 - type: `Object`
 
 
 ### `URL` 
+
+---
 
 #### `merge`
 
@@ -465,6 +547,8 @@ URL.merge({
 });
 ```
 
+---
+
 #### `parse`
 
 `URL.parse(url: String, options: Object)`
@@ -478,6 +562,8 @@ URL.merge({
 ```javascript
 URL.parse();
 ```
+
+---
 
 #### `get`
 
@@ -496,6 +582,8 @@ URL.get('name');
 
 ### `Calc` 
 
+---
+
 #### `add`
 
 `Calc(value: Number).add(value: Number).val()`
@@ -511,6 +599,8 @@ URL.get('name');
  */
 `Calc(1).add(1).val()`;
 ```
+
+---
 
 #### `sub`
 
@@ -529,6 +619,8 @@ URL.get('name');
 `Calc(1).sub(1).val()`;
 ```
 
+---
+
 #### `mul`
 
 `Calc(value: Number).mul(value: Number).val()`
@@ -544,6 +636,8 @@ URL.get('name');
  */
 `Calc(1).mul(1).val()`;
 ```
+
+---
 
 #### `div`
 
@@ -564,6 +658,8 @@ URL.get('name');
 
 ### `Load` 
 
+---
+
 #### `css`
 
 `Load.css(url: String, options: Object)`
@@ -577,6 +673,8 @@ URL.get('name');
 ```javascript
 Load.css('https://wya-team.github.io');
 ```
+
+---
 
 #### `cssCode`
 
@@ -595,6 +693,8 @@ Load.css('https://wya-team.github.io');
 Load.cssCode('#test { font-size: 12px }');
 ```
 
+---
+
 #### `js`
 
 `Load.js(url: String, options: Object)`
@@ -611,6 +711,8 @@ Load.js('https://wya-team.github.io');
 
 ### `DOM/$` 
 
+---
+
 #### `prefixStyle`
 
 `DOM.prefixStyle(key: String)`
@@ -623,6 +725,8 @@ Load.js('https://wya-team.github.io');
 ```javascript
 DOM.composedPath('transform');
 ```
+
+---
 
 #### `composedPath`
 
@@ -637,6 +741,8 @@ e.taget父层相关path兼容
 DOM.composedPath(event);
 ```
 
+---
+
 #### `on`
 
 `$(el: String | Object).on(eventName: String, handler: Function)`
@@ -649,6 +755,8 @@ DOM.composedPath(event);
 ```javascript
 $(el).on('click', handler);
 ```
+
+---
 
 #### `off`
 
@@ -663,6 +771,8 @@ $(el).on('click', handler);
 $(el).off('click', handler);
 ```
 
+---
+
 #### `once`
 
 `$(el: String | Object).once(eventName: String, handler: Function)`
@@ -675,6 +785,8 @@ $(el).off('click', handler);
 ```javascript
 $(el).once('click', handler);
 ```
+
+---
 
 #### `addClass`
 
@@ -689,6 +801,8 @@ $(el).once('click', handler);
 $(el).addClass('g-fs-12');
 ```
 
+---
+
 #### `removeClass`
 
 `$(el: String | Object).removeClass(className: String)`
@@ -701,6 +815,8 @@ $(el).addClass('g-fs-12');
 ```javascript
 $(el).removeClass('g-fs-12');
 ```
+
+---
 
 #### `hasClass`
 
@@ -715,6 +831,8 @@ $(el).removeClass('g-fs-12');
 $(el).hasClass('g-fs-12');
 ```
 
+---
+
 #### `getStyle`
 
 `$(el: String | Object).getStyle(key: String)`
@@ -727,6 +845,8 @@ $(el).hasClass('g-fs-12');
 ```javascript
 $(el).getStyle('height');
 ```
+
+---
 
 #### `setStyle`
 
@@ -742,6 +862,8 @@ $(el).setStyle('height', '100px');
 ```
 
 
+---
+
 #### `isScroll`
 
 `$(el: String | Object).isScroll(vertical: Boolean)`
@@ -755,6 +877,8 @@ $(el).setStyle('height', '100px');
 $(el).isScroll();
 ```
 
+---
+
 #### `getScroller`
 
 `$(el: String | Object).getScroller(vertical: Boolean)`
@@ -765,6 +889,8 @@ $(el).isScroll();
 ```javascript
 $(el).getScroller();
 ```
+
+---
 
 #### `contains`
 
@@ -779,6 +905,8 @@ $(el).getScroller();
 $(el).contains(children);
 ```
 
+
+---
 
 #### `scrollIntoView`
 
