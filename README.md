@@ -1,7 +1,8 @@
 # \@wya/utils
 [![npm][npm-image]][npm-url] [![changelog][changelog-image]][changelog-url]
 
-## [Demo](https://wya-team.github.io/wya-utils/demo/index.html)
+- [Demo](https://wya-team.github.io/wya-utils/demo/index.html)
+- [Documents](https://wya-team.github.io/wya-utils/docs/#/)
 
 ## 安装
 
