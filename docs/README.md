@@ -366,7 +366,438 @@ Storage.setVersion(`1.0.0`);
 
 **示例**
 ```javascript
-RegEx.set('email', { });
+RegEx.set('URL', {
+	value: /[a-zA-z]+:\/\/[^\s]*/,
+	msg: "请填写正确网页地址协议"
+});
+
+/**
+ * 或者
+ */
+RegEx.set({
+	URL: {
+		value: /[a-zA-z]+:\/\/[^\s]*/,
+		msg: "请填写正确网页地址协议"
+	}
+});
+```
+
+#### `validator`
+
+`RegEx.validator(rule: Object, value: any, next: Function, options: Object)`
+
+验证器（通常是用于async-validator）
+
++ **rule**: 规则
++ **value**: 参数
++ **next**: 是否允许通过，允许（`next()`）
+
+
+*rule:* 规则:
++ **value**(required): *String* 规则
++ **msg**(required): *String* 提示语
++ **required**: *Boolean, Function* 是否必填
++ **type**: *Boolean, Function* 类型验证
+
+**示例**
+```javascript
+RegEx.validator(RegEx.num, '2', (error) => {});
+```
+
+#### `num`
+- type: `Object`
+
+#### `integer`
+- type: `Object`
+
+#### `email`
+- type: `Object`
+
+#### `time`
+- type: `Object`
+
+#### `IDCard`
+- type: `Object`
+
+#### `price`
+- type: `Object`
+
+#### `mobile`
+- type: `Object`
+
+#### `phone`
+- type: `Object`
+
+#### `postalcode`
+- type: `Object`
+
+#### `zipcode`
+- type: `Object`
+
+#### `wechat`
+- type: `Object`
+
+#### `name`
+- type: `Object`
+
+
+### `URL` 
+
+#### `merge`
+
+`URL.merge(route: Object, options: Object)`
+
+基于规则构建新的url
+
++ **route**: 路由规则
++ **options**: 可配置参数
+
+*rule:* 规则:
++ **path**: *String, Array* 路径
++ **query**: *Object* 参数
+
+**示例**
+```javascript
+URL.merge({
+	// path: '/home',
+	path: ['/', 'home'],
+	query: { name: 'wya-team' }
+});
+```
+
+#### `parse`
+
+`URL.parse(url: String, options: Object)`
+
+解析当前路由 -> `{ query: {}, path: [] }`
+
++ **url**: 路径，默认值：当前路由
++ **options**: 可配置参数
+
+**示例**
+```javascript
+URL.parse();
+```
+
+#### `get`
+
+`URL.get(key: String, url: String, options: Object)`
+
+设置版本号
+
++ **key**: 参数键值
++ **url**: 路径，默认值：当前路由
++ **options**: 可配置参数
+
+**示例**
+```javascript
+URL.get('name');
+```
+
+### `Calc` 
+
+#### `add`
+
+`Calc(value: Number).add(value: Number).val()`
+
+加法
+
++ **value**: 相加的数
+
+**示例**
+```javascript
+/**
+ * 1 + 1
+ */
+`Calc(1).add(1).val()`;
+```
+
+#### `sub`
+
+`Calc(value: Number).sub(value: Number, exchange: Boolean).val()`
+
+减法
+
++ **value**: 相减的数
++ **exchange**: 默认 false, 互换位置
+
+**示例**
+```javascript
+/**
+ * 1 - 1
+ */
+`Calc(1).sub(1).val()`;
+```
+
+#### `mul`
+
+`Calc(value: Number).mul(value: Number).val()`
+
+乘法
+
++ **value**: 相乘的数
+
+**示例**
+```javascript
+/**
+ * 1 * 1
+ */
+`Calc(1).mul(1).val()`;
+```
+
+#### `div`
+
+`Calc(value: Number).div(value: Number, exchange: Boolean).val()`
+
+除法
+
++ **value**: 相除的数
++ **exchange**: 默认 false, 互换位置
+
+**示例**
+```javascript
+/**
+ * 1 / 1
+ */
+`Calc(1).div(1).val()`;
+```
+
+### `Load` 
+
+#### `css`
+
+`Load.css(url: String, options: Object)`
+
+加载css
+
++ **url**: 链接
++ **options**: 可配置参数
+
+**示例**
+```javascript
+Load.css('https://wya-team.github.io');
+```
+
+#### `cssCode`
+
+`Load.cssCode(code: String, options: Object)`
+
+加载cssCode
+
++ **code**: 代码块
++ **options**: 可配置参数
+
+*options:* 规则:
++ **id**: *String* 避免重复创建
+
+**示例**
+```javascript
+Load.cssCode('#test { font-size: 12px }');
+```
+
+#### `js`
+
+`Load.js(url: String, options: Object)`
+
+加载js
+
++ **url**: 链接
++ **options**: 可配置参数
+
+**示例**
+```javascript
+Load.js('https://wya-team.github.io');
+```
+
+### `DOM/$` 
+
+#### `prefixStyle`
+
+`DOM.prefixStyle(key: String)`
+
+样式兼容前缀
+
++ **key**: 样式的名字
+
+**示例**
+```javascript
+DOM.composedPath('transform');
+```
+
+#### `composedPath`
+
+`DOM.composedPath(event: Object)`
+
+e.taget父层相关path兼容
+
++ **event**: 当前触发的事件
+
+**示例**
+```javascript
+DOM.composedPath(event);
+```
+
+#### `on`
+
+`$(el: String | Object).on(eventName: String, handler: Function)`
+
+注册当前事件
+
++ **event**: 当前触发的事件
+
+**示例**
+```javascript
+$(el).on('click', handler);
+```
+
+#### `off`
+
+`$(el: String | Object).off(eventName: String, handler: Function)`
+
+卸载当前事件
+
++ **event**: 当前触发的事件
+
+**示例**
+```javascript
+$(el).off('click', handler);
+```
+
+#### `once`
+
+`$(el: String | Object).once(eventName: String, handler: Function)`
+
+一次执行当前事件
+
++ **event**: 当前触发的事件
+
+**示例**
+```javascript
+$(el).once('click', handler);
+```
+
+#### `addClass`
+
+`$(el: String | Object).addClass(className: String)`
+
+添加样式
+
++ **className**: 样式名
+
+**示例**
+```javascript
+$(el).addClass('g-fs-12');
+```
+
+#### `removeClass`
+
+`$(el: String | Object).removeClass(className: String)`
+
+移除样式
+
++ **className**: 样式名
+
+**示例**
+```javascript
+$(el).removeClass('g-fs-12');
+```
+
+#### `hasClass`
+
+`$(el: String | Object).hasClass(className: String)`
+
+是否包含当前样式
+
++ **className**: 样式名
+
+**示例**
+```javascript
+$(el).hasClass('g-fs-12');
+```
+
+#### `getStyle`
+
+`$(el: String | Object).getStyle(key: String)`
+
+计算当前元素的样式对应的值（计算属性，css/style）
+
++ **key**: 样式的名字
+
+**示例**
+```javascript
+$(el).getStyle('height');
+```
+
+#### `setStyle`
+
+`$(el: String | Object).setStyle(key: String)`
+
+设置样式
+
++ **key**: 样式的名字
+
+**示例**
+```javascript
+$(el).setStyle('height', '100px');
+```
+
+
+#### `isScroll`
+
+`$(el: String | Object).isScroll(vertical: Boolean)`
+
+是否含有滚动条
+
++ **vertical**: 是否垂直方向
+
+**示例**
+```javascript
+$(el).isScroll();
+```
+
+#### `getScroller`
+
+`$(el: String | Object).getScroller(vertical: Boolean)`
+
+获取最近的滚动条元素
+
+**示例**
+```javascript
+$(el).getScroller();
+```
+
+#### `contains`
+
+`$(el: String | Object).contains(children: Object)`
+
+父层是否包含子层（计算的是x,y,w,h）
+
++ **children**: 子元素
+
+**示例**
+```javascript
+$(el).contains(children);
+```
+
+
+#### `scrollIntoView`
+
+`$(el: String | Object).scrollIntoView(options: Object)`
+
+父层是否包含子层（计算的是x,y,w,h）
+
++ **options**: 可配置参数
+
+*options:* 规则:
++ **from**: *Number* 开始
++ **to**: *Number* 结束
++ **duration**: *Number* 持续时间
++ **onEnd**: *Function* 结束后回调
++ **scroller**: *Object* 滚动条
+
+**示例**
+```javascript
+$(el).scrollIntoView({ });
 ```
 
 ---
