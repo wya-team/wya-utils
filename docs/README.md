@@ -695,6 +695,23 @@ Load.cssCode('#test { font-size: 12px }');
 
 ---
 
+#### `removeCssCode`
+
+`Load.removeCssCode(id: String)`
+
+删除cssCode
+
++ **id**: *String* 避免重复创建
+
+
+**示例**
+```javascript
+Load.cssCode('test');
+```
+
+---
+
+
 #### `js`
 
 `Load.js(url: String, options: Object)`

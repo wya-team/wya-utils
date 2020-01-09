@@ -34,6 +34,12 @@ class LoadManager {
 		document.getElementsByTagName('head')[0].appendChild(style);
 	}
 
+	removeCssCode(id, opts = {}) {
+		let el = id && document.getElementById(id);
+
+		el && document.getElementsByTagName('head')[0].removeChild(el);
+	}
+
 	/**
 	 * css in js
 	 * 异步
