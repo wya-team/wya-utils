@@ -11,7 +11,7 @@ describe('device.js', () => {
 		Load.cssCode(code, { id: 'TEST' });
 		expect(document.getElementById('TEST').innerHTML).toBe(code);
 
-		Load.removeCssCode('TEST');
+		Load.removeCSSCode('TEST');
 
 		expect(document.getElementById('TEST')).toBe(null);
 	});

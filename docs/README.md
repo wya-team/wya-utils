@@ -695,9 +695,9 @@ Load.cssCode('#test { font-size: 12px }');
 
 ---
 
-#### `removeCssCode`
+#### `removeCSSCode`
 
-`Load.removeCssCode(id: String)`
+`Load.removeCSSCode(id: String)`
 
 删除cssCode
 

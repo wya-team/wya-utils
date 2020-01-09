@@ -78,7 +78,7 @@ npm install @wya/utils --save
 - Load
 	- css
 	- cssCode 
-	- removeCssCode 
+	- removeCSSCode 
 	- js
 
 
