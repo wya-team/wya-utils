@@ -39,7 +39,7 @@ const postcssLoader = {
 	}
 };
 const webpackConfig = {
-	resolve: {// 重定向路径
+	resolve: { // 重定向路径
 		mainFiles: ['index.web', 'index'],
 		modules: [path.resolve(APP_ROOT, 'src'), 'node_modules'],
 		extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json', '.css', '.less', '.scss'],
