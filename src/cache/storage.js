@@ -1,7 +1,9 @@
 import FakeStorage from './fake-storage';
 import { PREFIX_NAME, ENV_IS_DEV, formatKey } from './helper';
+import { IS_SERVER } from '../helper';
 
 const STORAGE_PERMISSION_ALLOW = (() => {
+	if (IS_SERVER) return false;
 	const test = 'test';
 	try {
 		window.localStorage.setItem(test, test);
@@ -25,6 +27,8 @@ export default class StorageManager {
 	}
 
 	setVersion(version, clear, opts = {}) {
+		if (IS_SERVER) return null;
+
 		this.version = version;
 
 		if (!STORAGE_PERMISSION_ALLOW) return;
@@ -44,6 +48,7 @@ export default class StorageManager {
 	 * @param val 保存的内容
 	 */
 	set(key, val, opts = {}) {
+		if (IS_SERVER) return;
 		let invoke = this.getInvoke(opts);
 
 		key = formatKey(key, this.version);
@@ -64,6 +69,8 @@ export default class StorageManager {
 	 * @return {Object}
 	 */
 	get(key, opts = {}) {
+		if (IS_SERVER) return null;
+
 		let invoke = this.getInvoke(opts);
 		let val = null;
 		key = formatKey(key, this.version);
@@ -83,6 +90,8 @@ export default class StorageManager {
 	 * @param  {[String]} key 删除的键值
 	 */
 	remove(key, opts = {}) {
+		if (IS_SERVER) return;
+
 		let invoke = this.getInvoke(opts);
 		
 		this[invoke].removeItem(key); 

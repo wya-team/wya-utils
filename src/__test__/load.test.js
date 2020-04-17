@@ -1,7 +1,8 @@
 import { Load } from '..';
 
-describe('device.js', () => {
+describe('load.js', () => {
 	test('验证api', () => {
+		if (IS_SERVER) return;
 		expect(typeof Load).toBe('object');
 		expect(typeof Load.css('2')).toBe('object');
 		expect(typeof Load.js('2')).toBe('object');
@@ -14,5 +15,13 @@ describe('device.js', () => {
 		Load.removeCSSCode('TEST');
 
 		expect(document.getElementById('TEST')).toBe(null);
+	});
+
+	test('Target: Node', () => {
+		if (!IS_SERVER) return;
+		expect(!Load.css()).toBe(true);
+		expect(!Load.js()).toBe(true);
+		expect(!Load.cssCode()).toBe(true);
+		expect(!Load.removeCSSCode()).toBe(true);
 	});
 });

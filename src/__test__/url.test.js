@@ -2,6 +2,8 @@ import { URL } from '..';
 
 describe('url.js', () => {
 	test('验证api', () => {
+		if (IS_SERVER) return;
+
 		expect(URL === window.URL).toBe(false);
 
 		// 设置当前网址
@@ -32,6 +34,19 @@ describe('url.js', () => {
 		// 设置当前网址
 		window.history.replaceState(null, null, url);
 		expect(URL.parse().query.mode).toBe(2);
+	});
 
+	test('Target: Node', () => {
+		if (!IS_SERVER) return;
+
+		expect(URL.merge({
+			path: '/home/main?test=1',
+			query: {
+				user: 'wya'
+			}
+		})).toBe('/home/main?test=1&user=wya');
+
+		expect(typeof URL.parse()).toBe('object');
+		expect(!URL.get()).toBe(true);
 	});
 });

@@ -1,6 +1,8 @@
+import { IS_SERVER } from './helper';
+
 export const getDevice = (opts = {}) => {
 	const device = {};
-	const ua = navigator.userAgent;
+	const ua = IS_SERVER ? '' : navigator.userAgent;
 
 	const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
 	const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);

@@ -21,6 +21,7 @@ describe('dom.js', () => {
 	});
 
 	test('-> on/off', () => {
+		if (IS_SERVER) return;
 		let count = 0;
 		let trigger = () => {
 			let eventA = new KeyboardEvent('keydown', { 'keyCode': 65 });
@@ -53,11 +54,13 @@ describe('dom.js', () => {
 	});
 
 	test('-> prefixStyle', () => {
+		if (IS_SERVER) return;
 		expect(DOM.prefixStyle('transform').camel).toBe('webkitTransform');
 		expect(DOM.prefixStyle('transform').kebab).toBe('-webkit-transform');
 	});
 
 	test('-> style/class/getScroller', () => {
+		if (IS_SERVER) return;
 		let div = document.createElement('div');
 		div.style.width = '200px';
 		div.style.overflow = 'auto';
@@ -89,6 +92,27 @@ describe('dom.js', () => {
 
 		// 测试环境下为false
 		expect($(div).contains(span)).toBe(false);
+	});
+
+	test('Target: Node', () => {
+		if (!IS_SERVER) return;
+		
+		let target = $('div')
+			.on()
+			.once()
+			.off()
+			.addClass()
+			.removeClass()
+			.setStyle()
+			.scrollIntoView();
+
+		expect(!$.prefixStyle().camel).toBe(true);
+		expect(!$.prefixStyle().prefix).toBe(true);
+		expect(!$(target).isScroll()).toBe(true);
+		expect(!$(target).hasClass()).toBe(true);
+		expect(!$(target).getStyle()).toBe(true);
+		expect(!$(target).contains()).toBe(true);
+		expect(!$(target).getScroller()).toBe(true);
 	});
 });
 

@@ -1,4 +1,6 @@
 
+import { IS_SERVER } from './helper';
+
 class URLManager {
 	/**
 	 * 创建新的url
@@ -30,6 +32,7 @@ class URLManager {
 	 * @return {Object}
 	 */	
 	static parse = (url, opts = {}) => {
+		if (IS_SERVER) return { path: [], query: {} };
 		// TODO: 使用 new window.URL(url);
 		url = url || `${location.pathname}${location.search}`;
 		let path = [];
@@ -63,6 +66,7 @@ class URLManager {
 		};
 	};
 	static get = (key, url, opts = {}) => {
+		if (IS_SERVER) return;
 		url = url 
 			? url.substring(url.indexOf('?')) 
 			: window.location.search;

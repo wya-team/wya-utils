@@ -1,8 +1,9 @@
-const libDir = process.env.LIB_DIR;
 const APP_ROOT = process.cwd();
 const path = require('path');
+const IS_SERVER = process.env.TARGET_ENV === 'node';
 
 module.exports = {
+	testEnvironment: IS_SERVER ? 'node' : 'jsdom',
 	setupFiles: [
 		path.resolve(APP_ROOT, 'tests/setup.js'),
 	],
@@ -30,19 +31,20 @@ module.exports = {
 	testRegex: '.*\\.test\\.js$',
 	/**
 	 * 覆盖率相关
+	 * 暂时需要发包，设置为false
 	 */
-	collectCoverage: false, // 覆盖率统计暂时先关闭
-	coverageDirectory: 'tests/coverage',
+	collectCoverage: false,
+	coverageDirectory: `tests/coverage/${process.env.TARGET_ENV}`,
 	// 检测src[js|jsx]是否都写了test用例
 	collectCoverageFrom: [
 		'src/**/*.{js,jsx}'
 	],
 	coverageThreshold: {
 		"global": {
-			"branches": 95,
-			"functions": 95,
-			"lines": 95,
-			"statements": 95
+			"branches": IS_SERVER ? 0 : 95,
+			"functions": IS_SERVER ? 0 : 95,
+			"lines": IS_SERVER ? 0 : 95,
+			"statements": IS_SERVER ? 0 : 95,
 		}
 	},
 	/**
@@ -57,11 +59,5 @@ module.exports = {
 		// Ignore modules without es dir
 		// 'node_modules\/[^/]+?\/(?!(es|node_modules)\/)',
 	],
-	globals: {},
-	/**
-	 * https://github.com/adriantoine/enzyme-to-json
-	 */
-	snapshotSerializers: [
-		'enzyme-to-json/serializer',
-	]
+	globals: {}
 };

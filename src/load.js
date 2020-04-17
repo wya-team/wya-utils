@@ -1,3 +1,4 @@
+import { IS_SERVER } from './helper';
 
 class LoadManager {
 	constructor() {
@@ -9,6 +10,8 @@ class LoadManager {
 	 * 同步
 	 */
 	cssCode(code, opts = {}) {
+		if (IS_SERVER) return;
+
 		let { id } = opts;
 
 		let el = id && document.getElementById(id);
@@ -35,6 +38,8 @@ class LoadManager {
 	}
 
 	removeCSSCode(id, opts = {}) {
+		if (IS_SERVER) return;
+
 		let el = id && document.getElementById(id);
 
 		el && document.getElementsByTagName('head')[0].removeChild(el);
@@ -46,6 +51,8 @@ class LoadManager {
 	 * async await
 	 */	
 	css(url, opts = {}) {
+		if (IS_SERVER) return;
+
 		this.sourceStatus[url] = this.sourceStatus[url] || new Promise((resolve, reject) => { 
 			let link = document.createElement("link");
 			link.type = "text/css";
@@ -72,6 +79,8 @@ class LoadManager {
 	 * async await
 	 */
 	js(url, opts = {}) {
+		if (IS_SERVER) return;
+		
 		this.sourceStatus[url] = this.sourceStatus[url] || new Promise((resolve, reject) => {
 			const script = document.createElement('script');
 			script.src = url;

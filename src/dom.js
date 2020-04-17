@@ -1,5 +1,6 @@
+import { IS_SERVER } from './helper';
 
-const $target = document.createElement('div').style;
+const $target = IS_SERVER ? {} : document.createElement('div').style;
 
 const prefix = (() => {
 	let keys = {
@@ -34,14 +35,17 @@ const events = (() => {
 	let add;
 	let remove;
 	let prefix;
-	if (document.addEventListener) {
-		add = 'addEventListener';
-		remove = 'removeEventListener';
-		prefix = '';
-	} else {
-		add = 'attachEvent';
-		remove = 'detachEvent';
-		prefix = 'on';
+
+	if (!IS_SERVER) {
+		if (document.addEventListener) {
+			add = 'addEventListener';
+			remove = 'removeEventListener';
+			prefix = '';
+		} else {
+			add = 'attachEvent';
+			remove = 'detachEvent';
+			prefix = 'on';
+		}
 	}
 
 	return {
@@ -51,7 +55,7 @@ const events = (() => {
 	};
 })();
 
-if (!window.requestAnimationFrame) {
+if (!IS_SERVER && !window.requestAnimationFrame) {
 	window.requestAnimationFrame = (
 		window.webkitRequestAnimationFrame 
 		|| window.mozRequestAnimationFrame 
@@ -67,7 +71,7 @@ if (!window.requestAnimationFrame) {
 class DOMManager {
 	static prefixStyle(v) {
 		if (prefix === false || prefix === 'standard') {
-			!prefix && console.log('@wya/utils: 不支持style fix');
+			!IS_SERVER && !prefix && console.log('@wya/utils: 不支持style fix');
 			return {
 				camel: v,
 				kebab: v
@@ -97,6 +101,8 @@ class DOMManager {
 	}
 
 	constructor(el, opts = {}) {
+
+		if (IS_SERVER) return;
 		// window.document/document.body
 		if (typeof el === 'object') {
 			this.$el = el;
@@ -110,18 +116,24 @@ class DOMManager {
 	}
 
 	on(event, handler, opts = false) { 
+		if (IS_SERVER) return this;
+
 		this.$el[events.add](events.prefix + event, handler, opts);
 
 		return this;
 	}
 
 	off(event, handler, opts = false) { 
+		if (IS_SERVER) return this;
+
 		this.$el[events.remove](events.prefix + event, handler, opts);
 
 		return this;
 	}
 
 	once(event, handler, opts = false) { 
+		if (IS_SERVER) return this;
+
 		let _this = this;
 		let listener = function() {
 			handler && handler.apply(this, arguments);
@@ -133,7 +145,7 @@ class DOMManager {
 	}
 
 	hasClass(cls) {
-		if (!cls) return false;
+		if (IS_SERVER || !cls) return false;
 
 		let el = this.$el;
 
@@ -149,6 +161,8 @@ class DOMManager {
 	}
 
 	addClass(cls) {
+		if (IS_SERVER) return this;
+
 		let el = this.$el;
 		let curClass = el.className;
 		let classes = (cls || '').split(' ');
@@ -171,6 +185,8 @@ class DOMManager {
 	}
 
 	removeClass(cls) {
+		if (IS_SERVER) return this;
+
 		let el = this.$el;
 		let classes = cls.split(' ');
 		let curClass = ' ' + el.className + ' ';
@@ -193,7 +209,7 @@ class DOMManager {
 	}
 
 	getStyle(name) {
-		if (!name) return null;
+		if (IS_SERVER || !name) return null;
 
 		if (name === 'float') {
 			name = 'cssFloat';
@@ -209,7 +225,7 @@ class DOMManager {
 	}
 
 	setStyle(name, value) {
-		if (!name) return this;
+		if (IS_SERVER || !name) return this;
 
 		let el = this.$el;
 		if (typeof name === 'object') {
@@ -226,6 +242,8 @@ class DOMManager {
 	}
 
 	isScroll(vertical) {
+		if (IS_SERVER) return false;
+
 		let el = this.$el;
 
 		let overflow = this.getStyle(`overflow-${vertical ? 'y' : 'x'}`);
@@ -234,6 +252,8 @@ class DOMManager {
 	}
 
 	getScroller(vertical) {
+		if (IS_SERVER) return null;
+
 		let parent = this.$el;
 		while (parent) {
 			if ([window, document, document.documentElement].includes(parent)) {
@@ -253,7 +273,7 @@ class DOMManager {
 	 * 与container.contains(el)不同
 	 */
 	contains(child) {
-		if (!child) return false;
+		if (IS_SERVER || !child) return false;
 
 		let el = this.$el;
 		let childRect = child.getBoundingClientRect();
@@ -282,6 +302,8 @@ class DOMManager {
 	 * https://github.com/yiminghe/dom-scroll-into-view
 	 */
 	scrollIntoView(opts = {}) {
+		if (IS_SERVER) return this;
+
 		let el = this.$el;
 		let { from = 0, to, duration = 300, onEnd, scroller } = opts;
 		
