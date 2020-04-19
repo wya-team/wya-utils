@@ -13,9 +13,9 @@
     "start": "npm run dev",
     "dev": "npm run all",
     "build": "npm run test && rm -rf ./lib && cross-env NODE_ENV=production babel src --out-dir lib --copy-files --ignore **.test.js,**.md,examples/**",
-    "pub": " bash config/publish.sh",
+    "pub": " bash scripts/publish.sh",
     "clean": "rm -rf ./dist ./demo",
-    "lint": "esw ./config/*.js ./src/**/*.js --color",
+    "lint": "esw ./scripts/*.js ./src/**/*.js --color",
     "lint:fix": "npm run lint -- --fix",
     "lint:watch": "npm run lint -- --fix --watch",
     "all": "npm-run-all --parallel --race --continue-on-error lint:watch test:browser-watch",
@@ -67,11 +67,11 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "node ./config/commit-lint"
+      "commit-msg": "node ./scripts/commit-lint"
     }
   },
   "lint-staged": {
-    "{src,config}/**/*.{js,jsx}": [
+    "{src,scripts}/**/*.{js,jsx}": [
       "esw --fix",
       "git add"
     ],
