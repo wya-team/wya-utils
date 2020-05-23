@@ -81,18 +81,29 @@ class LoadManager {
 	js(url, opts = {}) {
 		if (IS_SERVER) return;
 		
+		const { async = true } = opts;
 		this.sourceStatus[url] = this.sourceStatus[url] || new Promise((resolve, reject) => {
 			const script = document.createElement('script');
-			script.src = url;
-			script.onload = () => {
-				resolve();
-			};
-			script.onerror = (e) => {
-				reject();
-				this.jsArr = this.jsArr.filter(i => i !== url);
-				throw new Error(e);
-			};
+			if (async) {
+				script.src = url;
+				script.onload = () => {
+					resolve();
+				};
+				script.onerror = (e) => {
+					reject();
+					this.jsArr = this.jsArr.filter(i => i !== url);
+					throw new Error(e);
+				};
+			} else {
+				// Deprecation
+				let xhr = new XMLHttpRequest();
+				xhr.open('GET', url, false);
+				xhr.send();
+				script.innerHTML = xhr.responseText;
+			}
+			
 			document.getElementsByTagName("head")[0].appendChild(script);
+			!async && resolve();
 		});
 
 		return this.sourceStatus[url];
