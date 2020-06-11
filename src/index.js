@@ -6,3 +6,4 @@ export { Device } from './device';
 export { Calc } from './calc';
 export { Load } from './load';
 export { DOM, $ } from './dom';
+export { Decorator } from './decorator';
