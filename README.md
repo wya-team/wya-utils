@@ -100,6 +100,15 @@ npm install @wya/utils --save
 	- contains
 	- scrollIntoView
 
+- Decorator
+	- AutoCatch
+	- Debounce
+	- Throttle
+	- Delay
+	- Ready
+	- Time
+	- Deprecated
+
 <!--  以下内容无视  -->
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
 [changelog-url]: CHANGELOG.md

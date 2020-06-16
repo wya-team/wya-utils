@@ -947,6 +947,165 @@ $(el).scrollIntoView({ });
 
 ---
 
+### `Decorator` 
+
+---
+
+#### `AutoCatch`
+
+`@Decorator.AutoCatch(type: String | Function)`
+
+自动捕获错误
+
++ **type**: 'log' | 'error' | '(res) => {}' | 'handleCatch'
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.AutoCatch()
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+#### `Debounce`
+
+`@Decorator.Debounce(wait: Number, options: Object)`
+
+防抖
+
++ **wait**: 时间戳，默认值：0
++ **options**: 可配置参数
+
+*options:* 规则:
++ **leading**: *Boolean* 指定在延迟开始前调用。 默认值：`false`
++ **trailing**: *Boolean* 指定在延迟结束后调用。 默认值：`true`
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.Debounce()
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+#### `Throttle`
+
+`@Decorator.Throttle(wait: Number, options: Object)`
+
+节流
+
++ **wait**: 时间戳，默认值：0
++ **options**: 可配置参数
+
+*options:* 规则:
++ **leading**: *Boolean* 指定在延迟开始前调用。 默认值：`true`
++ **trailing**: *Boolean* 指定在延迟结束后调用。 默认值：`true`
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.Throttle()
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+#### `Delay`
+
+`@Decorator.Delay(wait: Number)`
+
+延迟执行（setTimeout）
+
++ **wait**: 时间戳，默认值：0
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.Delay()
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+#### `Ready`
+
+`@Decorator.Ready(fn: Function)`
+
+在ready函数下执行
+
++ **fn**: ready函数，'$ready' | 'ready' | '$nextTick' | 'nextTick'
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.Ready(cb => cb())
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+#### `Time`
+
+`@Decorator.Time(logger: Object)`
+
+打印执行的时间长度
+
++ **logger**: 默认值: `console`
+
+*logger:* 规则:
++ **time**: *Function* 执行前调用。 默认值：`true`
++ **timeEnd**: *Function* 执行后调用 默认值：`true`
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.Time(cb => cb())
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+#### `Deprecated`
+
+`@Decorator.Deprecated(msg: String | Function)`
+
+提示废弃的方法
+
++ **msg**: 提示语，默认值: `This function will be removed.`
+
+**示例**
+```javascript
+let methods = {
+	@Decorator.Time(cb => cb())
+	async request() {
+		await xxx
+	}
+}
+```
+
+--- 
+
+
 ## 开源许可类型
 MIT
 

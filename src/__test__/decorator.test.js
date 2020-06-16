@@ -342,4 +342,100 @@ describe('Decorator.js', () => {
 		expect(isInvoke).toBe(true);
 		expect(next).toBe(3);
 	});
+
+	test('Delay: 500ms', async () => {
+		let isInvoke = false;
+		let methods = {
+			@Decorator.Delay(500)
+			delay(res) {
+				isInvoke = true;
+			}
+		};
+		methods.delay();
+
+		expect(isInvoke).toBe(false);
+		await new Promise((r) => setTimeout(r, 1000));
+
+		expect(isInvoke).toBe(true);
+	});
+
+	test('Ready', async () => {
+		let isInvoke = false;
+		let methods = {
+			@Decorator.Ready(cb => {
+				isInvoke = true;
+				cb();
+			})
+			ready(res) {
+				
+			}
+		};
+		methods.ready();
+		expect(isInvoke).toBe(true);
+	});
+
+	test('Time', async () => {
+		let isInvoke = false;
+		let next = 1;
+		let methods = {
+			@Decorator.Time({
+				time: () => {
+					expect(next).toBe(1);
+					next = 2;
+				},
+				timeEnd: () => {
+					expect(next).toBe(3);
+					isInvoke = true;
+				}
+			})
+			time(res) {
+				expect(next).toBe(2);
+				next = 3;
+			}
+		};
+		methods.time();
+		expect(isInvoke).toBe(true);
+	});
+
+	test('Time: promise', async () => {
+		let isInvoke = false;
+		let next = 1;
+		let methods = {
+			@Decorator.Time({
+				time: () => {
+					expect(next).toBe(1);
+					next = 2;
+				},
+				timeEnd: () => {
+					expect(next).toBe(3);
+					isInvoke = true;
+				}
+			})
+			time(res) {
+				return new Promise((r) => {
+					setTimeout(() => {
+						expect(next).toBe(2);
+						next = 3;
+						r();
+					}, 100);
+				});
+			}
+		};
+		await methods.time();
+		expect(isInvoke).toBe(true);
+	});
+
+	test('Deprecated', async () => {
+		let isInvoke = false;
+		let methods = {
+			@Decorator.Deprecated(() => {
+				isInvoke = true;
+			})
+			deprecated(res) {
+				
+			}
+		};
+		methods.deprecated();
+		expect(isInvoke).toBe(true);
+	});
 });

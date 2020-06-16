@@ -60,7 +60,9 @@ class DecoratorManager {
 		cb = cb || ctx['handleCatch'] || (err => console.log(`@wya/utils - decorator:`, err));
 
 		const enhancer = original => (...args) => {
-			return Promise.resolve(original.apply(ctx, args)).catch(cb.bind(ctx));
+			return Promise
+				.resolve(original.apply(ctx, args))
+				.catch(cb.bind(ctx));
 		};
 
 		this._rebuildDescriptor(descriptor, enhancer);
@@ -69,24 +71,26 @@ class DecoratorManager {
 	// 同lodash api
 	static Debounce = (wait = 0, opts = {}) => (ctx, name, descriptor) => {
 		const { leading = false, trailing = true } = opts;
-		this._rebuildDescriptor(
-			descriptor, 
-			(original) => this._debounce(
+
+		const enhancer = original => {
+			return this._debounce(
 				original.bind(ctx),
 				wait, 
 				{ 
 					leading, 
 					trailing 
 				}
-			)
-		);
+			);
+		};
+
+		this._rebuildDescriptor(descriptor, enhancer);
 	}
 
 	static Throttle = (wait = 0, opts = {}) => (ctx, name, descriptor) => {
 		const { leading = true, trailing = true } = opts;
-		this._rebuildDescriptor(
-			descriptor, 
-			(original) => this._debounce(
+
+		const enhancer = original => {
+			return this._debounce(
 				original.bind(ctx),
 				wait, 
 				{ 
@@ -94,8 +98,73 @@ class DecoratorManager {
 					trailing,
 					throttle: true
 				}
-			)
-		);
+			);
+		};
+
+		this._rebuildDescriptor(descriptor, enhancer);
+	}
+
+	static Delay = (wait = 0, opts = {}) => (ctx, name, descriptor) => {
+		const enhancer = original => (...args) => {
+			return setTimeout(
+				() => original.apply(ctx, args), 
+				wait
+			);
+		};
+
+		this._rebuildDescriptor(descriptor, enhancer);
+	}
+
+	static Ready = (cb) => (ctx, name, descriptor) => {
+		cb = cb 
+			|| ctx['$ready'] 
+			|| ctx['ready'] 
+			|| ctx['$nextTick'] 
+			|| ctx['nextTick']
+			|| ((done) => {
+				console.log(`@wya/utils - decorator: Ready Invalid`);
+				done();
+			});
+
+		const enhancer = original => (...args) => {
+			return cb(() => original.apply(ctx, args));
+		};
+
+		this._rebuildDescriptor(descriptor, enhancer);
+	}
+
+	static Time = (logger = console) => (ctx, name, descriptor) => {
+		let start = logger.time || ((name) => {});
+		let end = logger.timeEnd || ((name) => {});
+
+		const enhancer = original => (...args) => {
+			start(name);
+
+			const before = original.apply(ctx, args);
+			
+			if (before && before.then) {
+				return before.finally(() => {
+					end(name);
+				});
+			}
+
+			end(name);
+			return before;
+		};
+
+		this._rebuildDescriptor(descriptor, enhancer);
+	}
+
+	static Deprecated = (msg) => (ctx, name, descriptor) => {
+		let print = typeof msg === 'function' 
+			? msg
+			: () => (console.warn || console.log)(`DEPRECATION ${name}: ${msg || 'This function will be removed.'}`);
+		const enhancer = original => (...args) => {
+			print();
+			return original.apply(ctx, args);
+		};
+
+		this._rebuildDescriptor(descriptor, enhancer);
 	}
 };
 export const Decorator = DecoratorManager;
