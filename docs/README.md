@@ -1096,7 +1096,7 @@ let methods = {
 **示例**
 ```javascript
 let methods = {
-	@Decorator.Time(cb => cb())
+	@Decorator.Deprecated()
 	async request() {
 		await xxx
 	}
