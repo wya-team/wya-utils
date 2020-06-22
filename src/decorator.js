@@ -57,7 +57,7 @@ class DecoratorManager {
 	};
 
 	static AutoCatch = (cb) => (ctx, name, descriptor) => {
-		cb = cb || ctx['handleCatch'] || (err => console.log(`@wya/utils - decorator:`, err));
+		cb = cb || ctx['handleAutoCatch'] || (err => console.log(`@wya/utils - decorator:`, err));
 
 		const enhancer = original => (...args) => {
 			return Promise

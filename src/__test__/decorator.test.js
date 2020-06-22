@@ -19,7 +19,7 @@ describe('Decorator.js', () => {
 					msg: '失败了'
 				});
 			},
-			handleCatch(res) {
+			handleAutoCatch(res) {
 				isInvoke = true;
 				expect(this.user).toBe('wya');
 				expect(res.msg).toBe('失败了');
@@ -40,7 +40,7 @@ describe('Decorator.js', () => {
 					msg: '失败了'
 				});
 			},
-			handleCatch: (res) => {
+			handleAutoCatch: (res) => {
 				isInvoke = true;
 				expect(this).toBe(undefined);
 				expect(res.msg).toBe('失败了');
