@@ -42,7 +42,14 @@ class LoadManager {
 
 		let el = id && document.getElementById(id);
 
-		el && document.getElementsByTagName('head')[0].removeChild(el);
+		if (!el) return;
+
+		let code = el.innerHTML;
+		document.getElementsByTagName('head')[0].removeChild(el);
+
+		if (this.cssCodeArr.includes(code)) {
+			this.cssCodeArr = this.cssCodeArr.filter(i => i !== code);
+		}
 	}
 
 	/**

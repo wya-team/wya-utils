@@ -14,6 +14,8 @@ describe('load.js', () => {
 
 		Load.removeCSSCode('TEST');
 
+		expect(Load.cssCodeArr.length).toBe(1);
+
 		expect(document.getElementById('TEST')).toBe(null);
 	});
 
