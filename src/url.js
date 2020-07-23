@@ -74,7 +74,7 @@ class URLManager {
 		let regExp = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
 		let val = decodeURIComponent(url).substr(1).match(regExp);
 
-		val = val != null ? unescape(val[2]) : null;
+		val = val != null ? decodeURIComponent(val[2]) : null;
 
 		try {
 			val = JSON.parse(val);
