@@ -1,6 +1,19 @@
 
 import { IS_SERVER } from './helper';
 
+/**
+ * 目前只处理整数(订单编号会超过这个长度，一般不会)，小数点暂不处理
+ * @param {*} val 
+ */
+const parseQuery = (val) => {
+	let regex = /^\d+$/;
+	// 数字字符串长度超过17，JSON.parse()会将后面的数组变成0
+	if (regex.test(val) && val.length > 17) {
+		return val;
+	}
+	return JSON.parse(val);
+};
+
 class URLManager {
 	/**
 	 * 创建新的url
@@ -77,9 +90,9 @@ class URLManager {
 		val = val != null ? decodeURIComponent(val[2]) : null;
 
 		try {
-			val = JSON.parse(val);
+			val = parseQuery(val);
 			// 避免string套string, 暂时处理，可考虑while
-			val = typeof val === 'string' ? JSON.parse(val) : val;
+			val = typeof val === 'string' ? parseQuery(val) : val;
 		} catch (e) {
 		}
 		return val;
