@@ -110,7 +110,16 @@ class RegExManager {
 			? (auto = !rule.required.length, rule.required(callback))
 			: rule.required;
 
-		if (required && (!value || (value instanceof Array && !value.length))) {
+		/**
+		 * 0, '0', false 对于required均是输入状态
+		 * null, undefined, '', []为限定范围
+		 */
+		if (
+			required && (
+				(value !== 0 && value !== false && !value) 
+				|| (value instanceof Array && !value.length)
+			)
+		) {
 			errorMsg = `${rule.name || ''}必填`;
 			auto && callback(errorMsg);
 			return false;

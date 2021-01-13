@@ -15,6 +15,14 @@ describe('regex.js', () => {
 			expect(errorMsg).toBe('必填');
 		});
 
+		RegEx.validator({ required: true }, 0, (errorMsg) => {
+			expect(errorMsg).toBe(undefined);
+		});
+
+		RegEx.validator({ required: true }, false, (errorMsg) => {
+			expect(errorMsg).toBe(undefined);
+		});
+
 		RegEx.validator({ required: true, type: "mobile" }, '16', (errorMsg) => {
 			expect(errorMsg).toBe('请填写正确的手机号码');
 		});
