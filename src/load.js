@@ -98,8 +98,8 @@ class LoadManager {
 				};
 				script.onerror = (e) => {
 					reject();
-					this.jsArr = this.jsArr.filter(i => i !== url);
-					throw new Error(e);
+					delete this.sourceStatus[url];
+					console.log(e);
 				};
 			} else {
 				// Deprecation
