@@ -1,3 +1,6 @@
+/**
+ * TODO: 不支持Class上使用，this指向不是实例后的
+ */
 class DecoratorManager {
 	static _rebuildDescriptor = (descriptor, enhancer) => {
 		const isArrowFunc = descriptor.initializer;

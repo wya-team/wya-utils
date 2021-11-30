@@ -51,6 +51,29 @@ describe('Decorator.js', () => {
 		expect(isInvoke).toBe(true);
 	});
 
+	test('AutoCatch Class - 还为解决class上的this指向', async () => {
+		let isInvoke = false;
+		class AutoCatch {
+			constructor() {
+				this.user = 'wya';
+			}
+			@Decorator.AutoCatch()
+			async request() {
+				await Promise.reject({
+					msg: '失败了'
+				});
+			}
+			handleAutoCatch(res) {
+				isInvoke = true;
+				// expect(this.user).toBe('wya');
+				// expect(res.msg).toBe('失败了');
+			}
+		};
+
+		await new AutoCatch().request();
+		expect(isInvoke).toBe(true);
+	});
+
 	test('Debounce: 默认执行最后一次', async () => {
 		let isInvoke = false;
 		let methods = {
