@@ -7,7 +7,7 @@ describe('url.js', () => {
 		expect(URL === window.URL).toBe(false);
 
 		// 设置当前网址
-		window.history.replaceState(null, null, '/home/main?user=wya');
+		window.history.replaceState(null, null, '/home/main?user=wya&order_id=9169490842632817');
 
 		expect(URL.parse().query.user).toBe('wya');
 		
@@ -20,6 +20,8 @@ describe('url.js', () => {
 
 		expect(URL.get('user')).toBe('wya');
 		expect(URL.get('user2')).toBe(null);
+		// 参数位数字类型，过长的情况
+		expect(URL.get('order_id')).toBe('9169490842632817');
 
 		expect(URL.merge({
 			path: '/home/main?test=1',

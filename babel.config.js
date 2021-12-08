@@ -17,7 +17,14 @@ module.exports = (api) => {
 			"@babel/plugin-syntax-dynamic-import",
 			"@babel/plugin-transform-runtime",
 			["@babel/plugin-proposal-decorators", { legacy: true }],
-			["@babel/plugin-proposal-class-properties", { loose: true }]
+			[
+				"@babel/plugin-proposal-class-properties",
+				{
+					"assumptions": {
+						"setPublicClassFields": true
+					}
+				}
+			],
 		]
 	};
 };

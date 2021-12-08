@@ -8,7 +8,7 @@ import { IS_SERVER } from './helper';
 const parseQuery = (val) => {
 	let regex = /^\d+$/;
 	// 数字字符串长度超过17，JSON.parse()会将后面的数组变成0
-	if (regex.test(val) && val.length > 17) {
+	if (regex.test(val) && val.length >= 16) {
 		return val;
 	}
 	return JSON.parse(val);
