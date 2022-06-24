@@ -80,7 +80,7 @@ class DeviceManager {
 		this.wechatDevTools = /wechatdevtools/.test(ua);
 
 		// pc or touch
-		this.touch = (this.android || this.ios) ? true : false;
+		this.touch = (this.android || this.ios || 'ontouchend' in document) ? true : false;
 
 		// firefox
 		this.firefox = ua.toLowerCase().indexOf('firefox') > -1;
