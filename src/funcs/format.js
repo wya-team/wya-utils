@@ -27,3 +27,12 @@ export const sum2array = (value) => {
 		return pre;
 	}, []);
 };
+
+/**
+ * 手机号中间4位 * 号加密
+ * @param {*} str 17812345678
+ * @returns 178****5678
+ */
+export const encryptMobile = (str) => {
+	return str.replace(/^(\d{3})\d+(\d{4})$/, '$1****$2');
+};
