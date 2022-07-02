@@ -13,3 +13,9 @@ describe('url.js', () => {
 		expect(Utils.invoke()).toBe(1);
 	});
 });
+
+describe('format.js', () => {
+	test('encryptMobile', () => {
+		expect(Utils.encryptMobile('17812345678')).toBe('178****5678');
+	});
+});
