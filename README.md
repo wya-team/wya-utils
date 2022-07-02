@@ -26,6 +26,7 @@ npm install @wya/utils --save
 	- sum2array,
 	- getUid
 	- set
+	- encryptMobile
 
 - Storage, Cookie
 	- get
