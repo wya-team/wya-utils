@@ -21,12 +21,12 @@ npm install @wya/utils --save
 	- createMixins,
 	- formatMoney,
 	- canvas2file,
-	- base622Blob,
+	- base642Blob,
 	- getWordsLength,
 	- sum2array,
 	- getUid
 	- set
-	- encryptMobile
+	- encrypt
 
 - Storage, Cookie
 	- get

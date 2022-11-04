@@ -8,7 +8,7 @@ import {
 	cloneDeepEasier
 } from './assit';
 import { createMixins } from './mixin';
-import { formatMoney, sum2array, encryptMobile } from './format';
+import { formatMoney, sum2array, encrypt } from './format';
 import { base642Blob, canvas2file, getWordsLength } from './other';
 
 export const Utils = {
@@ -25,7 +25,7 @@ export const Utils = {
 	base642Blob,
 	canvas2file,
 	getWordsLength,
-	encryptMobile,
+	encrypt,
 	/**
 	 * 扩展或重写
 	 */

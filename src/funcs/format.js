@@ -33,6 +33,17 @@ export const sum2array = (value) => {
  * @param {*} str 17812345678
  * @returns 178****5678
  */
-export const encryptMobile = (str) => {
-	return str.replace(/^(\d{3})\d+(\d{4})$/, '$1****$2');
+export const encrypt = (value = '', from, length) => {
+	from = from || 3;
+	length = length || 4;
+	let repeat = length || 0;
+	let content = value.substring(0, from);
+
+	while (repeat) {
+		content += '*';
+		repeat--;
+	}
+
+	content += value.substring(from + length);
+	return content;
 };
